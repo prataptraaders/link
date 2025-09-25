@@ -3,146 +3,70 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pratap Trader's - Premium Fashion</title>
+  <title>Pratap Traders Links</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: linear-gradient(to bottom, #0d0d0d, #3d2b1f);
-      color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f0f0f, #1c1c1c);
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
+      height: 100vh;
+      color: #fff;
     }
+
     .card {
-      background: #fff;
-      color: #000;
+      background: #2b2b2b;
       border-radius: 20px;
-      max-width: 420px;
-      width: 90%;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
-      overflow: hidden;
-      animation: fadeIn 1s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from {opacity: 0; transform: scale(0.95);}
-      to {opacity: 1; transform: scale(1);}
-    }
-    .header {
-      background: #111;
-      color: #fff;
-      padding: 25px 20px 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+      padding: 40px 30px;
       text-align: center;
+      width: 350px;
+      animation: fadeIn 1.2s ease;
     }
-    .logo-circle {
-      width: 140px;
-      height: 140px;
+
+    .logo {
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
-      margin: 0 auto 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.5);
-    }
-    .logo-circle img {
-      width: 100%;
-      height: 100%;
+      margin-bottom: 20px;
       object-fit: cover;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     }
-    .header h1 {
-      margin: 10px 0 5px;
-      font-size: 24px;
+
+    h2 {
+      margin: 0 0 25px;
+      font-size: 22px;
       font-weight: 600;
+      letter-spacing: 1px;
+      color: #f0f0f0;
     }
-    .header p {
-      font-size: 14px;
-      color: #ccc;
-      line-height: 1.5;
-    }
-    .content {
-      padding: 20px;
-    }
-    .content h2 {
-      font-size: 18px;
-      margin-bottom: 15px;
-      text-align: center;
-      font-weight: 600;
-      color: #333;
-    }
-    .link {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px;
+
+    .btn {
+      display: block;
       margin: 12px 0;
-      border: 1px solid #e0c97f;
-      border-radius: 12px;
-      background: #fff8e1;
-      text-decoration: none;
-      color: #000;
-      font-weight: 500;
-      transition: 0.3s;
-    }
-    .link:hover {
-      background: #f5e4b8;
-      transform: translateY(-3px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-    .link img {
-      width: 28px;
-      height: 28px;
-      margin-right: 10px;
-    }
-    .link span {
-      flex: 1;
-    }
-    .footer {
       padding: 14px;
-      text-align: center;
-      font-size: 12px;
-      color: #333;
-      border-top: 1px solid #e0c97f;
-      background: #fff8e1;
-      font-weight: 500;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      color: #fff;
+      background: #444;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #666;
+      transform: translateY(-3px);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
   <div class="card">
-    <div class="header">
-      <div class="logo-circle">
-        <!-- Embedded Base64 logo -->
-        <img src="data:image/png;base64,PUT_YOUR_LOGO_BASE64_HERE" alt="Pratap Traders Logo">
-      </div>
-      <h1>Pratap Trader's</h1>
-      <p>✨ Premium Men's & Women's Wear ✨ <br>
-         Trendy T-Shirts, Shirts, Kurtis & More <br>
-         Best Prices – Now on Amazon & Flipkart!
-      </p>
-    </div>
-    <div class="content">
-      <h2>Connect With Us</h2>
-      <a href="https://whatsapp.com/channel/0029VbAyq3HHLHQbVjyCz93D" class="link" target="_blank" rel="noopener noreferrer">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Logo">
-        <span>WhatsApp Channel</span>
-        →
-      </a>
-      <a href="https://www.instagram.com/pratap.traders?igsh=MTJhZWJnejJyOGgzdw==" class="link" target="_blank" rel="noopener noreferrer">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram Logo">
-        <span>Instagram Page</span>
-        →
-      </a>
-      <a href="https://youtube.com/@pratap.traders?si=sjyhUv3C1pd5VFcc" class="link" target="_blank" rel="noopener noreferrer">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" alt="YouTube Logo">
-        <span>YouTube Channel</span>
-        →
-      </a>
-    </div>
-    <div class="footer">
-      © 2025 Pratap Trader's | All Rights Reserved
-    </div>
-  </div>
-</body>
-</html>
+    <!-- Embedded logo in Base64 -->
+    <img class="logo" src="data:image/png;base64,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
