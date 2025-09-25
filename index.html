@@ -77,7 +77,7 @@
 </head>
 <body>
 
-<canvas id="bubbleCanvas"></canvas>
+<canvas id="rippleCanvas"></canvas>
 
 <div class="container">
   <img src="logo.png" alt="Pratap Trader's Logo" class="logo">
@@ -95,60 +95,54 @@
 </div>
 
 <script>
-const canvas = document.getElementById('bubbleCanvas');
+const canvas = document.getElementById('rippleCanvas');
 const ctx = canvas.getContext('2d');
 let width = canvas.width = window.innerWidth;
 let height = canvas.height = window.innerHeight;
 
-let bubbles = [];
+let ripples = [];
 let resetTimeout;
 
-// Bubble class
-class Bubble {
+class Ripple {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.radius = Math.random() * 20 + 10;
-    this.alpha = 1;
-    this.speed = Math.random() * 2 + 1;
+    this.radius = 0;
+    this.alpha = 0.5;
   }
   draw() {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2);
-    ctx.fillStyle = `rgba(255,255,255,${this.alpha})`;
-    ctx.fill();
+    ctx.strokeStyle = `rgba(255,255,255,${this.alpha})`;
+    ctx.lineWidth = 3;
+    ctx.stroke();
   }
   update() {
-    this.y -= this.speed;
+    this.radius += 3;
     this.alpha -= 0.01;
-    this.radius += 0.1;
   }
 }
 
-// Animate bubbles
 function animate() {
   ctx.clearRect(0, 0, width, height);
-  bubbles.forEach((b, i) => {
-    b.update();
-    b.draw();
-    if(b.alpha <= 0) bubbles.splice(i,1);
+  ripples.forEach((r, i) => {
+    r.update();
+    r.draw();
+    if(r.alpha <= 0) ripples.splice(i,1);
   });
   requestAnimationFrame(animate);
 }
 animate();
 
-// Create bubble on click
 document.body.addEventListener('click', e => {
-  bubbles.push(new Bubble(e.clientX, e.clientY));
+  ripples.push(new Ripple(e.clientX, e.clientY));
   
-  // Reset background after 3 seconds if no interaction
   clearTimeout(resetTimeout);
   resetTimeout = setTimeout(() => {
-    document.body.style.background = 'linear-gradient(270deg, #ff6b6b, #ffa500, #ffd700, #33cc99, #3399ff, #9933ff, #ff33aa)';
+    ripples = []; // clear ripples after 3 seconds inactivity
   }, 3000);
 });
 
-// Make canvas responsive
 window.addEventListener('resize', () => {
   width = canvas.width = window.innerWidth;
   height = canvas.height = window.innerHeight;
@@ -157,4 +151,3 @@ window.addEventListener('resize', () => {
 
 </body>
 </html>
-
