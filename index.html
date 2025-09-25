@@ -17,7 +17,7 @@
       overflow:hidden; position:relative;
     }
 
-    /* Gradient background */
+    /* Background layer */
     #water-bg {
       position:fixed;
       top:0; left:0;
@@ -25,7 +25,6 @@
       background: linear-gradient(270deg, #ff6b6b, #ffa500, #ffd700, #33cc99, #3399ff, #9933ff, #ff33aa);
       background-size:1400% 1400%;
       animation: gradientBG 25s ease infinite;
-      z-index:-2;
     }
 
     @keyframes gradientBG {
@@ -34,12 +33,10 @@
       100% {background-position: 0% 50%;}
     }
 
-    /* Water ripple overlay */
-    #water-overlay {
+    canvas {
       position:fixed;
       top:0; left:0;
       width:100%; height:100%;
-      z-index:-1;
     }
 
     body::before {
@@ -47,7 +44,7 @@
       position:absolute; top:0; left:0;
       width:100%; height:100%;
       background: rgba(0,0,0,0.45);
-      z-index:-1;
+      z-index:0;
     }
 
     .container { position:relative; z-index:1; max-width:400px; }
@@ -72,7 +69,7 @@
 <body>
 
   <div id="water-bg"></div>
-  <canvas id="water-overlay"></canvas>
+  <canvas id="ripple"></canvas>
 
   <div class="container">
     <img src="logo.png" alt="Pratap Trader's Logo" class="logo">
@@ -89,41 +86,18 @@
     <footer>&copy; 2025 Pratap Trader's. All rights reserved.</footer>
   </div>
 
-  <!-- RippleJS (WebGL water effect) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/ripplejs/1.0.0/ripple.min.js"></script>
+  <!-- Realistic Water Ripple Script -->
+  <script src="https://unpkg.com/ripple-canvas/dist/ripple-canvas.min.js"></script>
   <script>
-    const canvas = document.getElementById('water-overlay');
-    const ripple = new Ripple(canvas, {
+    const ripple = new RippleCanvas({
+      canvas: document.getElementById('ripple'),
       resolution: 256,
+      interactive: true,
       dropRadius: 20,
       perturbance: 0.04,
     });
 
-    // Function to create ripple
-    function makeRipple(x, y) {
-      ripple.drop(x, y, 20, 0.04);
-    }
-
-    // On click/tap
-    document.addEventListener('click', e => {
-      makeRipple(e.clientX, e.clientY);
-      resetIdle();
-    });
-
-    // On mouse move (gentle ripples)
-    document.addEventListener('mousemove', e => {
-      makeRipple(e.clientX, e.clientY);
-      resetIdle();
-    });
-
-    // On touch move (mobile water drag)
-    document.addEventListener('touchmove', e => {
-      const touch = e.touches[0];
-      makeRipple(touch.clientX, touch.clientY);
-      resetIdle();
-    });
-
-    // Idle reset after 3s
+    // Auto calm after 3s idle
     let idleTimer;
     function resetIdle() {
       clearTimeout(idleTimer);
@@ -131,6 +105,9 @@
         ripple.clear();
       }, 3000);
     }
+    document.addEventListener('click', resetIdle);
+    document.addEventListener('mousemove', resetIdle);
+    document.addEventListener('touchmove', resetIdle);
     resetIdle();
   </script>
 
