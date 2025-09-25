@@ -1,633 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pratap Trader's - Premium Fashion Boutique</title>
-    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <script src="https://unpkg.com/feather-icons"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
-        .font-playfair {
-            font-family: 'Playfair Display', serif;
-        }
-        .font-poppins {
-            font-family: 'Poppins', sans-serif;
-        }
-        .gradient-text {
-            background: linear-gradient(90deg, #d4af37 0%, #f4e5c2 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .hero-gradient {
-            background: linear-gradient(135deg, rgba(13,13,13,0.9) 0%, rgba(61,43,31,0.9) 100%);
-        }
-        .product-card:hover .product-overlay {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .custom-shape-divider-bottom-1714569432 {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            overflow: hidden;
-            line-height: 0;
-            transform: rotate(180deg);
-        }
-        .custom-shape-divider-bottom-1714569432 svg {
-            position: relative;
-            display: block;
-            width: calc(100% + 1.3px);
-            height: 150px;
-        }
-        .custom-shape-divider-bottom-1714569432 .shape-fill {
-            fill: #0d0d0d;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pratap Trader's - Premium Fashion</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(to bottom, #0d0d0d, #3d2b1f);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .card {
+      background: #fff;
+      color: #000;
+      border-radius: 20px;
+      max-width: 420px;
+      width: 90%;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+      overflow: hidden;
+      animation: fadeIn 1s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: scale(0.95);}
+      to {opacity: 1; transform: scale(1);}
+    }
+    .header {
+      background: #111;
+      color: #fff;
+      padding: 25px 20px 15px;
+      text-align: center;
+    }
+    .logo-circle {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      margin: 0 auto 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+    }
+    .logo-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .header h1 {
+      margin: 10px 0 5px;
+      font-size: 24px;
+      font-weight: 600;
+    }
+    .header p {
+      font-size: 14px;
+      color: #ccc;
+      line-height: 1.5;
+    }
+    .content {
+      padding: 20px;
+    }
+    .content h2 {
+      font-size: 18px;
+      margin-bottom: 15px;
+      text-align: center;
+      font-weight: 600;
+      color: #333;
+    }
+    .link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px;
+      margin: 12px 0;
+      border: 1px solid #e0c97f;
+      border-radius: 12px;
+      background: #fff8e1;
+      text-decoration: none;
+      color: #000;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+    .link:hover {
+      background: #f5e4b8;
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .link img {
+      width: 28px;
+      height: 28px;
+      margin-right: 10px;
+    }
+    .link span {
+      flex: 1;
+    }
+    .footer {
+      padding: 14px;
+      text-align: center;
+      font-size: 12px;
+      color: #333;
+      border-top: 1px solid #e0c97f;
+      background: #fff8e1;
+      font-weight: 500;
+    }
+  </style>
 </head>
-<body class="font-poppins bg-gray-100">
-    <!-- Hero Section -->
-    <div id="hero" class="relative h-screen flex items-center justify-center overflow-hidden">
-        <div class="absolute inset-0 z-0">
-            <div id="vanta-waves" class="w-full h-full"></div>
-        </div>
-        <div class="hero-gradient absolute inset-0 z-10 opacity-90"></div>
-        <div class="container mx-auto px-6 relative z-20 text-center">
-            <div data-aos="fade-up" data-aos-duration="1000">
-                <h1 class="text-5xl md:text-7xl font-playfair font-bold text-white mb-6">
-                    <span class="gradient-text">Pratap Trader's</span>
-                </h1>
-                <p class="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto">
-                     ✨ Premium Men's & Women's Wear ✨ Trendy T-Shirts, Shirts, Kurtis & More
-                </p>
-                <div class="flex flex-wrap justify-center gap-4">
-                    <a href="#collections" class="px-8 py-3 bg-gradient-to-r from-yellow-600 to-yellow-800 text-white rounded-full font-medium hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-                        Explore Collections
-                    </a>
-                    <a href="#contact" class="px-8 py-3 border-2 border-yellow-600 text-yellow-500 rounded-full font-medium hover:bg-yellow-600 hover:text-white transition-all duration-300">
-                        Contact Us
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="absolute bottom-0 left-0 w-full">
-            <div class="custom-shape-divider-bottom-1714569432">
-                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
-                </svg>
-            </div>
-        </div>
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="logo-circle">
+        <!-- Embedded Base64 logo -->
+        <img src="data:image/png;base64,PUT_YOUR_LOGO_BASE64_HERE" alt="Pratap Traders Logo">
+      </div>
+      <h1>Pratap Trader's</h1>
+      <p>✨ Premium Men's & Women's Wear ✨ <br>
+         Trendy T-Shirts, Shirts, Kurtis & More <br>
+         Best Prices – Now on Amazon & Flipkart!
+      </p>
     </div>
-
-    <!-- About Section -->
-    <section class="py-20 bg-gray-900 text-white">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-10 md:mb-0" data-aos="fade-right">
-                    <div class="relative">
-                        <img src="http://static.photos/fashion/1024x576/42" alt="Pratap Trader's Store" class="rounded-lg shadow-2xl w-full">
-                        <div class="absolute -bottom-5 -right-5 bg-yellow-600 p-4 rounded-lg shadow-lg">
-                            <h3 class="text-xl font-bold text-white">Since 2015</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="md:w-1/2 md:pl-12" data-aos="fade-left">
-                    <h2 class="text-4xl font-playfair font-bold mb-6">
-                        Our <span class="gradient-text">Story</span>
-                    </h2>
-                    <p class="text-gray-300 mb-6 text-lg">
-                        Pratap Trader's has been at the forefront of premium fashion since 2015, offering exquisite collections for both men and women. Our commitment to quality and style has made us a trusted name in the fashion industry.
-                    </p>
-                    <div class="space-y-4">
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 mt-1">
-                                <i data-feather="check-circle" class="text-yellow-500 w-6 h-6"></i>
-                            </div>
-                            <p class="ml-3 text-gray-300">
-                                Premium quality fabrics and materials
-                            </p>
-                        </div>
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 mt-1">
-                                <i data-feather="check-circle" class="text-yellow-500 w-6 h-6"></i>
-                            </div>
-                            <p class="ml-3 text-gray-300">
-                                Trendy designs for all occasions
-                            </p>
-                        </div>
-                        <div class="flex items-start">
-                            <div class="flex-shrink-0 mt-1">
-                                <i data-feather="check-circle" class="text-yellow-500 w-6 h-6"></i>
-                            </div>
-                            <p class="ml-3 text-gray-300">
-                                Available on Amazon & Flipkart for your convenience
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Collections Section -->
-    <section id="collections" class="py-20 bg-gray-100">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-4xl font-playfair font-bold mb-4">
-                    Our <span class="gradient-text">Collections</span>
-                </h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">
-                    Explore our premium range of fashionable clothing for men and women
-                </p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Collection 1 -->
-                <div class="relative overflow-hidden rounded-xl shadow-lg group" data-aos="fade-up" data-aos-delay="100">
-                    <img src="http://static.photos/fashion/640x360/101" alt="Men's Collection" class="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
-                    <div class="absolute bottom-0 left-0 p-6 w-full">
-                        <h3 class="text-2xl font-bold text-white mb-2">Men's Wear</h3>
-                        <p class="text-gray-300 mb-4">Trendy shirts, t-shirts and more</p>
-                        <a href="#" class="inline-flex items-center text-yellow-400 hover:text-yellow-300 font-medium">
-                            Shop Now
-                            <i data-feather="arrow-right" class="ml-2 w-4 h-4"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Collection 2 -->
-                <div class="relative overflow-hidden rounded-xl shadow-lg group" data-aos="fade-up" data-aos-delay="200">
-                    <img src="http://static.photos/fashion/640x360/102" alt="Women's Collection" class="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
-                    <div class="absolute bottom-0 left-0 p-6 w-full">
-                        <h3 class="text-2xl font-bold text-white mb-2">Women's Wear</h3>
-                        <p class="text-gray-300 mb-4">Elegant kurtis and fashionable outfits</p>
-                        <a href="#" class="inline-flex items-center text-yellow-400 hover:text-yellow-300 font-medium">
-                            Shop Now
-                            <i data-feather="arrow-right" class="ml-2 w-4 h-4"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Collection 3 -->
-                <div class="relative overflow-hidden rounded-xl shadow-lg group" data-aos="fade-up" data-aos-delay="300">
-                    <img src="http://static.photos/fashion/640x360/103" alt="New Arrivals" class="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
-                    <div class="absolute bottom-0 left-0 p-6 w-full">
-                        <h3 class="text-2xl font-bold text-white mb-2">New Arrivals</h3>
-                        <p class="text-gray-300 mb-4">Latest trends for the season</p>
-                        <a href="#" class="inline-flex items-center text-yellow-400 hover:text-yellow-300 font-medium">
-                            Shop Now
-                            <i data-feather="arrow-right" class="ml-2 w-4 h-4"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Featured Products -->
-    <section class="py-20 bg-gray-900 text-white">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-4xl font-playfair font-bold mb-4">
-                    <span class="gradient-text">Featured</span> Products
-                </h2>
-                <p class="text-gray-400 max-w-2xl mx-auto">
-                    Our best selling items loved by customers
-                </p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Product 1 -->
-                <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-2" data-aos="fade-up" data-aos-delay="100">
-                    <div class="relative">
-                        <img src="http://static.photos/fashion/640x360/201" alt="Premium T-Shirt" class="w-full h-64 object-cover">
-                        <div class="absolute top-3 right-3 bg-yellow-600 text-white px-3 py-1 rounded-full text-xs font-bold">
-                            BESTSELLER
-                        </div>
-                    </div>
-                    <div class="p-5">
-                        <h3 class="text-xl font-bold mb-2">Premium Cotton T-Shirt</h3>
-                        <div class="flex items-center mb-3">
-                            <div class="flex text-yellow-400">
-                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                            </div>
-                            <span class="text-gray-400 text-sm ml-2">(128 reviews)</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-2xl font-bold text-yellow-500">₹899</span>
-                            <a href="#" class="text-yellow-500 hover:text-yellow-400 flex items-center">
-                                <i data-feather="shopping-cart" class="w-5 h-5 mr-1"></i>
-                                Add to Cart
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Product 2 -->
-                <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-2" data-aos="fade-up" data-aos-delay="200">
-                    <div class="relative">
-                        <img src="http://static.photos/fashion/640x360/202" alt="Designer Kurti" class="w-full h-64 object-cover">
-                    </div>
-                    <div class="p-5">
-                        <h3 class="text-xl font-bold mb-2">Designer Printed Kurti</h3>
-                        <div class="flex items-center mb-3">
-                            <div class="flex text-yellow-400">
-                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                            </div>
-                            <span class="text-gray-400 text-sm ml-2">(96 reviews)</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-2xl font-bold text-yellow-500">₹1,299</span>
-                            <a href="#" class="text-yellow-500 hover:text-yellow-400 flex items-center">
-                                <i data-feather="shopping-cart" class="w-5 h-5 mr-1"></i>
-                                Add to Cart
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Product 3 -->
-                <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-2" data-aos="fade-up" data-aos-delay="300">
-                    <div class="relative">
-                        <img src="http://static.photos/fashion/640x360/203" alt="Formal Shirt" class="w-full h-64 object-cover">
-                        <div class="absolute top-3 right-3 bg-yellow-600 text-white px-3 py-1 rounded-full text-xs font-bold">
-                            NEW
-                        </div>
-                    </div>
-                    <div class="p-5">
-                        <h3 class="text-xl font-bold mb-2">Slim Fit Formal Shirt</h3>
-                        <div class="flex items-center mb-3">
-                            <div class="flex text-yellow-400">
-                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                            </div>
-                            <span class="text-gray-400 text-sm ml-2">(64 reviews)</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-2xl font-bold text-yellow-500">₹1,199</span>
-                            <a href="#" class="text-yellow-500 hover:text-yellow-400 flex items-center">
-                                <i data-feather="shopping-cart" class="w-5 h-5 mr-1"></i>
-                                Add to Cart
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Product 4 -->
-                <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-2" data-aos="fade-up" data-aos-delay="400">
-                    <div class="relative">
-                        <img src="http://static.photos/fashion/640x360/204" alt="Casual Dress" class="w-full h-64 object-cover">
-                    </div>
-                    <div class="p-5">
-                        <h3 class="text-xl font-bold mb-2">Casual Summer Dress</h3>
-                        <div class="flex items-center mb-3">
-                            <div class="flex text-yellow-400">
-                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                                <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                                <i data-feather="star" class="w-4 h-4"></i>
-                            </div>
-                            <span class="text-gray-400 text-sm ml-2">(42 reviews)</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-2xl font-bold text-yellow-500">₹1,499</span>
-                            <a href="#" class="text-yellow-500 hover:text-yellow-400 flex items-center">
-                                <i data-feather="shopping-cart" class="w-5 h-5 mr-1"></i>
-                                Add to Cart
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="text-center mt-12">
-                <a href="#" class="inline-flex items-center px-8 py-3 bg-gradient-to-r from-yellow-600 to-yellow-800 text-white rounded-full font-medium hover:shadow-lg transition-all duration-300">
-                    View All Products
-                    <i data-feather="arrow-right" class="ml-2 w-5 h-5"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="py-20 bg-gray-100">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-4xl font-playfair font-bold mb-4">
-                    What Our <span class="gradient-text">Customers</span> Say
-                </h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">
-                    Don't just take our word for it - hear from our satisfied customers
-                </p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Testimonial 1 -->
-                <div class="bg-white p-8 rounded-xl shadow-lg" data-aos="fade-up" data-aos-delay="100">
-                    <div class="flex items-center mb-4">
-                        <div class="flex text-yellow-400">
-                            <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                            <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                            <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                            <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                            <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 mb-6">
-                        "The quality of Pratap Trader's products is exceptional. I've purchased multiple t-shirts and they've all held up beautifully after many washes. Highly recommend!"
-                    </p>
-                    <div class="flex items-center">
-                        <img src="http://static.photos/people/200x200/301" alt="Customer" class="w-12 h-12 rounded-full mr-4 object-cover">
-                        <div>
-                            <h4 class="font-bold">Rahul Sharma</h4>
-                            <p class="text-gray-500 text-sm">Verified Buyer</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Testimonial 2 -->
-                <div class="bg-white p-8 rounded-xl shadow-lg" data-aos="fade-up" data-aos-delay="200">
-                    <div class="flex items-center mb-4">
-                        <div class="flex text-yellow-400">
-                            <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                            <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                            <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                            <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                            <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 mb-6">
-                        "I absolutely love their kurtis! The fabric is so comfortable and the designs are unique. I get compliments every time I wear them."
-                    </p>
-                    <div class="flex items-center">
-                        <img src="http://static.photos/people/200x200/302" alt="Customer" class="w-12 h-12 rounded-full mr-4 object-cover">
-                        <div>
-                            <h4 class="font-bold">Priya Patel</h4>
-                            <p class="text-gray-500 text-sm">Verified Buyer</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Testimonial 3 -->
-                <div class="bg-white p-8 rounded-xl shadow-lg" data-aos="fade-up" data-aos-delay="300">
-                    <div class="flex items-center mb-4">
-                        <div class="flex text-yellow-400">
-                            <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                            <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                            <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                            <i data-feather="star" class="w-4 h-4 fill-current"></i>
-                            <i data-feather="star" class="w-4 h-4"></i>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 mb-6">
-                        "Great customer service and fast shipping. The shirt I ordered fits perfectly and looks exactly like the product images. Will definitely shop here again."
-                    </p>
-                    <div class="flex items-center">
-                        <img src="http://static.photos/people/200x200/303" alt="Customer" class="w-12 h-12 rounded-full mr-4 object-cover">
-                        <div>
-                            <h4 class="font-bold">Amit Kumar</h4>
-                            <p class="text-gray-500 text-sm">Verified Buyer</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-gray-900 text-white">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-4xl font-playfair font-bold mb-4">
-                    Get In <span class="gradient-text">Touch</span>
-                </h2>
-                <p class="text-gray-400 max-w-2xl mx-auto">
-                    Have questions or want to place an order? Reach out to us!
-                </p>
-            </div>
-            
-            <div class="flex flex-col md:flex-row gap-12">
-                <div class="md:w-1/2" data-aos="fade-right">
-                    <div class="bg-gray-800 p-8 rounded-xl shadow-lg">
-                        <h3 class="text-2xl font-bold mb-6">Contact Information</h3>
-                        
-                        <div class="space-y-6">
-                            <div class="flex items-start">
-                                <div class="flex-shrink-0 mt-1">
-                                    <i data-feather="mail" class="text-yellow-500 w-6 h-6"></i>
-                                </div>
-                                <div class="ml-4">
-                                    <h4 class="font-bold text-gray-300">Email</h4>
-                                    <p class="text-gray-400">contact@prataptraders.com</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-start">
-                                <div class="flex-shrink-0 mt-1">
-                                    <i data-feather="phone" class="text-yellow-500 w-6 h-6"></i>
-                                </div>
-                                <div class="ml-4">
-                                    <h4 class="font-bold text-gray-300">Phone</h4>
-                                    <p class="text-gray-400">+91 98765 43210</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-start">
-                                <div class="flex-shrink-0 mt-1">
-                                    <i data-feather="map-pin" class="text-yellow-500 w-6 h-6"></i>
-                                </div>
-                                <div class="ml-4">
-                                    <h4 class="font-bold text-gray-300">Location</h4>
-                                    <p class="text-gray-400">123 Fashion Street, Mumbai, India</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-10">
-                            <h4 class="font-bold text-gray-300 mb-4">Connect With Us</h4>
-                            <div class="flex space-x-4">
-                                <a href="https://whatsapp.com/channel/0029VbAyq3HHLHQbVjyCz93D" target="_blank" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-yellow-500 hover:bg-yellow-600 hover:text-white transition-colors duration-300">
-                                    <i data-feather="message-circle" class="w-5 h-5"></i>
-                                </a>
-                                <a href="https://www.instagram.com/pratap.traders?igsh=MTJhZWJnejJyOGgzdw==" target="_blank" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-yellow-500 hover:bg-yellow-600 hover:text-white transition-colors duration-300">
-                                    <i data-feather="instagram" class="w-5 h-5"></i>
-                                </a>
-                                <a href="https://youtube.com/@pratap.traders?si=sjyhUv3C1pd5VFcc" target="_blank" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-yellow-500 hover:bg-yellow-600 hover:text-white transition-colors duration-300">
-                                    <i data-feather="youtube" class="w-5 h-5"></i>
-                                </a>
-                                <a href="#" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-yellow-500 hover:bg-yellow-600 hover:text-white transition-colors duration-300">
-                                    <i data-feather="facebook" class="w-5 h-5"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="md:w-1/2" data-aos="fade-left">
-                    <div class="bg-gray-800 p-8 rounded-xl shadow-lg">
-                        <h3 class="text-2xl font-bold mb-6">Send Us a Message</h3>
-                        <form>
-                            <div class="mb-6">
-                                <label for="name" class="block text-gray-300 mb-2">Your Name</label>
-                                <input type="text" id="name" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 text-white">
-                            </div>
-                            <div class="mb-6">
-                                <label for="email" class="block text-gray-300 mb-2">Email Address</label>
-                                <input type="email" id="email" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 text-white">
-                            </div>
-                            <div class="mb-6">
-                                <label for="phone" class="block text-gray-300 mb-2">Phone Number</label>
-                                <input type="tel" id="phone" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 text-white">
-                            </div>
-                            <div class="mb-6">
-                                <label for="message" class="block text-gray-300 mb-2">Your Message</label>
-                                <textarea id="message" rows="5" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 text-white"></textarea>
-                            </div>
-                            <button type="submit" class="w-full py-3 bg-gradient-to-r from-yellow-600 to-yellow-800 text-white font-medium rounded-lg hover:shadow-lg transition-all duration-300">
-                                Send Message
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Newsletter -->
-    <section class="py-16 bg-gradient-to-r from-yellow-700 to-yellow-900 text-white">
-        <div class="container mx-auto px-6 text-center">
-            <div class="max-w-3xl mx-auto" data-aos="fade-up">
-                <h2 class="text-3xl font-playfair font-bold mb-4">Stay Updated</h2>
-                <p class="text-yellow-100 mb-8">
-                    Subscribe to our newsletter for exclusive offers, new arrivals, and fashion tips
-                </p>
-                <form class="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
-                    <input type="email" placeholder="Your email address" class="flex-grow px-4 py-3 rounded-lg bg-yellow-800 bg-opacity-50 border border-yellow-600 focus:outline-none focus:ring-2 focus:ring-white text-white placeholder-yellow-200">
-                    <button type="submit" class="px-6 py-3 bg-white text-yellow-800 font-medium rounded-lg hover:bg-gray-100 transition-colors duration-300">
-                        Subscribe
-                    </button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-950 text-gray-400 py-12">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <h3 class="text-xl font-playfair font-bold text-white mb-4">Pratap Trader's</h3>
-                    <p class="mb-4">
-                        Premium fashion for men and women at affordable prices. Quality you can trust.
-                    </p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-yellow-500 transition-colors duration-300">
-                            <i data-feather="facebook" class="w-5 h-5"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-yellow-500 transition-colors duration-300">
-                            <i data-feather="twitter" class="w-5 h-5"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-yellow-500 transition-colors duration-300">
-                            <i data-feather="instagram" class="w-5 h-5"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-yellow-500 transition-colors duration-300">
-                            <i data-feather="youtube" class="w-5 h-5"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <div>
-                    <h4 class="text-lg font-bold text-white mb-4">Shop</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="hover:text-yellow-500 transition-colors duration-300">Men's Wear</a></li>
-                        <li><a href="#" class="hover:text-yellow-500 transition-colors duration-300">Women's Wear</a></li>
-                        <li><a href="#" class="hover:text-yellow-500 transition-colors duration-300">New Arrivals</a></li>
-                        <li><a href="#" class="hover:text-yellow-500 transition-colors duration-300">Best Sellers</a></li>
-                        <li><a href="#" class="hover:text-yellow-500 transition-colors duration-300">Sale</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="text-lg font-bold text-white mb-4">Help</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="hover:text-yellow-500 transition-colors duration-300">FAQs</a></li>
-                        <li><a href="#" class="hover:text-yellow-500 transition-colors duration-300">Shipping Policy</a></li>
-                        <li><a href="#" class="hover:text-yellow-500 transition-colors duration-300">Returns & Exchanges</a></li>
-                        <li><a href="#" class="hover:text-yellow-500 transition-colors duration-300">Size Guide</a></li>
-                        <li><a href="#" class="hover:text-yellow-500 transition-colors duration-300">Contact Us</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="text-lg font-bold text-white mb-4">About</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="hover:text-yellow-500 transition-colors duration-300">Our Story</a></li>
-                        <li><a href="#" class="hover:text-yellow-500 transition-colors duration-300">Quality Promise</a></li>
-                        <li><a href="#" class="hover:text-yellow-500 transition-colors duration-300">Testimonials</a></li>
-                        <li><a href="#" class="hover:text-yellow-500 transition-colors duration-300">Blog</a></li>
-                        <li><a href="#" class="hover:text-yellow-500 transition-colors duration-300">Careers</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-                <p>© 2025 Pratap Trader's. All rights reserved.</p>
-                <div class="flex space-x-6 mt-4 md:mt-0">
-                    <a href="#" class="hover:text-yellow-500 transition-colors duration-300">Privacy Policy</a>
-                    <a href="#" class="hover:text-yellow-500 transition-colors duration-300">Terms of Service</a>
-                    <a href="#" class="hover:text-yellow-500 transition-colors duration-300">Shipping Policy</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        AOS.init({
-            duration: 800,
-            easing: 'ease-in-out',
-            once: true
-        });
-        
-        feather.replace();
-        
-        // Initialize Vanta.js waves effect
-        VANTA.WAVES({
-            el: "#vanta-waves",
-            mouseControls: true,
-            touchControls: true,
-            gyroControls: false,
-            minHeight: 200.00,
-            minWidth: 200.00,
-            scale: 1.00,
-            scaleMobile: 1.00,
-            color: 0x3d2b1f,
-            shininess: 50.00,
-            waveHeight: 20.00,
-            waveSpeed: 0.75,
-            zoom: 0.65
-        });
-    </script>
+    <div class="content">
+      <h2>Connect With Us</h2>
+      <a href="https://whatsapp.com/channel/0029VbAyq3HHLHQbVjyCz93D" class="link" target="_blank" rel="noopener noreferrer">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Logo">
+        <span>WhatsApp Channel</span>
+        →
+      </a>
+      <a href="https://www.instagram.com/pratap.traders?igsh=MTJhZWJnejJyOGgzdw==" class="link" target="_blank" rel="noopener noreferrer">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram Logo">
+        <span>Instagram Page</span>
+        →
+      </a>
+      <a href="https://youtube.com/@pratap.traders?si=sjyhUv3C1pd5VFcc" class="link" target="_blank" rel="noopener noreferrer">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" alt="YouTube Logo">
+        <span>YouTube Channel</span>
+        →
+      </a>
+    </div>
+    <div class="footer">
+      © 2025 Pratap Trader's | All Rights Reserved
+    </div>
+  </div>
 </body>
 </html>
