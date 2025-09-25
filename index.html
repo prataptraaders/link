@@ -7,9 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <style>
-    :root {
-      --bg-gradient: linear-gradient(270deg, #ff6b6b, #ffa500, #ffd700, #33cc99, #3399ff, #9933ff, #ff33aa);
-    }
+    :root { --bg-gradient: linear-gradient(270deg, #ff6b6b, #ffa500, #ffd700, #33cc99, #3399ff, #9933ff, #ff33aa); }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
 
@@ -45,35 +43,17 @@
       100% { background-position: 0% 50%; }
     }
 
-    canvas {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: 0;
-    }
+    canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
 
-    .container {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: 400px;
-    }
+    .container { position: relative; z-index: 1; width: 100%; max-width: 400px; }
 
-    .logo {
-      width: 120px; height: 120px;
-      border-radius: 50%; object-fit: cover;
-      border: 3px solid #fff; margin-bottom: 20px;
-      animation: fadeIn 1s ease forwards;
-      box-shadow: 0 0 20px rgba(255,255,255,0.3);
-    }
+    .logo { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid #fff; margin-bottom: 20px; animation: fadeIn 1s ease forwards; box-shadow: 0 0 20px rgba(255,255,255,0.3); }
 
     h1 { font-size: 2.2em; margin-bottom: 5px; animation: fadeIn 1.2s ease forwards; text-shadow: 2px 2px 15px rgba(0,0,0,0.6); }
     p { font-size: 1em; color: #ddd; margin-bottom: 30px; animation: fadeIn 1.4s ease forwards; }
 
     .links { display: flex; flex-direction: column; gap: 20px; width: 100%; animation: fadeIn 1.6s ease forwards; }
 
-    /* Premium swipe button styles */
     .swipe-btn {
       position: relative;
       border-radius: 50px;
@@ -114,8 +94,8 @@
     }
 
     footer { margin-top: 40px; font-size: 0.8em; color: #ccc; animation: fadeIn 1.8s ease forwards; }
-
     @keyframes fadeIn { 0% {opacity: 0; transform: translateY(20px);} 100% {opacity:1; transform:translateY(0);} }
+
   </style>
 </head>
 <body>
@@ -168,11 +148,13 @@
       });
     });
 
-    // Swipe logic
+    // Swipe logic (works on PC and mobile)
     buttons.forEach(btn => {
       const handle = btn.querySelector('.swipe-handle');
       let isDragging = false;
-      let startX, currentX;
+      let startX = 0;
+      let currentX = 0;
+
       const maxDrag = btn.offsetWidth - handle.offsetWidth - 5;
 
       handle.addEventListener('pointerdown', e => {
@@ -182,16 +164,36 @@
       });
 
       handle.addEventListener('pointermove', e => {
-        if (!isDragging) return;
+        if(!isDragging) return;
         currentX = e.clientX - startX;
-        if (currentX < 0) currentX = 0;
-        if (currentX > maxDrag) currentX = maxDrag;
+        if(currentX < 0) currentX = 0;
+        if(currentX > maxDrag) currentX = maxDrag;
         handle.style.transform = `translateX(${currentX}px)`;
       });
 
       handle.addEventListener('pointerup', e => {
         isDragging = false;
-        if (currentX >= maxDrag) window.open(btn.getAttribute('data-link'), '_blank');
+        if(currentX >= maxDrag) window.open(btn.getAttribute('data-link'), '_blank');
+        handle.style.transform = 'translateX(0)';
+      });
+
+      // Touch support
+      handle.addEventListener('touchstart', e => {
+        isDragging = true;
+        startX = e.touches[0].clientX - handle.offsetLeft;
+      });
+
+      handle.addEventListener('touchmove', e => {
+        if(!isDragging) return;
+        currentX = e.touches[0].clientX - startX;
+        if(currentX < 0) currentX = 0;
+        if(currentX > maxDrag) currentX = maxDrag;
+        handle.style.transform = `translateX(${currentX}px)`;
+      });
+
+      handle.addEventListener('touchend', e => {
+        isDragging = false;
+        if(currentX >= maxDrag) window.open(btn.getAttribute('data-link'), '_blank');
         handle.style.transform = 'translateX(0)';
       });
     });
@@ -201,16 +203,11 @@
     const ctx = canvas.getContext("2d");
     let ripples = [];
 
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
+    function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
 
-    document.body.addEventListener("click", (e) => {
-      ripples.push({ x: e.clientX, y: e.clientY, radius: 0, alpha: 0.6 });
-    });
+    document.body.addEventListener("click", (e) => { ripples.push({ x:e.clientX, y:e.clientY, radius:0, alpha:0.6 }); });
 
     function draw() {
       ctx.clearRect(0,0,canvas.width,canvas.height);
