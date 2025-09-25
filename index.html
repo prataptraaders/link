@@ -1,115 +1,336 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pratap Trader's</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-  <style>
-    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
-
-    body {
-      min-height:100vh;
-      display:flex; flex-direction:column;
-      align-items:center; justify-content:center;
-      text-align:center; color:#fff;
-      overflow:hidden; position:relative;
-    }
-
-    /* Background layer */
-    #water-bg {
-      position:fixed;
-      top:0; left:0;
-      width:100%; height:100%;
-      background: linear-gradient(270deg, #ff6b6b, #ffa500, #ffd700, #33cc99, #3399ff, #9933ff, #ff33aa);
-      background-size:1400% 1400%;
-      animation: gradientBG 25s ease infinite;
-    }
-
-    @keyframes gradientBG {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
-    }
-
-    canvas {
-      position:fixed;
-      top:0; left:0;
-      width:100%; height:100%;
-    }
-
-    body::before {
-      content:"";
-      position:absolute; top:0; left:0;
-      width:100%; height:100%;
-      background: rgba(0,0,0,0.45);
-      z-index:0;
-    }
-
-    .container { position:relative; z-index:1; max-width:400px; }
-    .logo { width:120px; height:120px; border-radius:50%; border:3px solid #fff; margin-bottom:20px; }
-    h1 { font-size:2.2em; margin-bottom:5px; }
-    p { font-size:1em; margin-bottom:30px; color:#ddd; }
-    .links { display:flex; flex-direction:column; gap:15px; }
-    .link-button {
-      display:flex; align-items:center; justify-content:center; gap:10px;
-      padding:14px 20px; border-radius:30px; text-decoration:none;
-      font-weight:600; color:#fff;
-      background: rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.5);
-      backdrop-filter: blur(8px); transition:all 0.3s ease;
-    }
-    .youtube:hover { background:#FF0000; }
-    .instagram:hover { background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);}
-    .whatsapp:hover { background:#25D366; }
-    .flipkart:hover { background:#2874F0; }
-    footer { margin-top:40px; font-size:0.8em; color:#ccc; }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Pratap Trader's — Water Ripple Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  html,body{height:100%;margin:0;font-family:'Poppins',sans-serif;background:#000}
+  /* canvas will be scaled by CSS to full viewport but has lower internal resolution to improve perf */
+  canvas.ripple {
+    position:fixed; inset:0; width:100%; height:100%;
+    display:block; z-index:-1; pointer-events:none;
+  }
+  /* page content */
+  .container{position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; color:#fff; text-align:center; padding:28px;}
+  .logo{width:120px;height:120px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,0.9);margin-bottom:16px;box-shadow:0 8px 30px rgba(0,0,0,0.4)}
+  h1{margin:0 0 6px 0;color:#ffdf5a;text-shadow:0 6px 25px rgba(0,0,0,0.6);font-size:2rem}
+  p{margin:0 0 22px 0;color:#e8e8e8}
+  .links{display:flex;flex-direction:column;gap:12px;width:92%;max-width:360px}
+  .link-button{display:flex;align-items:center;justify-content:center;gap:10px;padding:12px 18px;border-radius:28px;text-decoration:none;font-weight:600;color:#fff;background:rgba(0,0,0,0.35);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.12);transition:all .25s;box-shadow:0 6px 18px rgba(0,0,0,0.35)}
+  .youtube:hover{background:#FF0000}
+  .instagram:hover{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)}
+  .whatsapp:hover{background:#25D366}
+  .flipkart:hover{background:#2874F0}
+  footer{margin-top:28px;color:#ddd;font-size:0.85rem}
+  /* small note */
+  .note{position:fixed;left:12px;bottom:12px;z-index:3;color:rgba(255,255,255,0.7);font-size:13px}
+</style>
 </head>
 <body>
 
-  <div id="water-bg"></div>
-  <canvas id="ripple"></canvas>
+<canvas id="rippleCanvas" class="ripple"></canvas>
 
-  <div class="container">
-    <img src="logo.png" alt="Pratap Trader's Logo" class="logo">
-    <h1>Pratap Trader's</h1>
-    <p>Premium Fashion for Men & Women</p>
+<div class="container">
+  <img src="logo.png" alt="Pratap Trader's Logo" class="logo">
+  <h1>Pratap Trader's</h1>
+  <p>Premium Fashion for Men & Women</p>
 
-    <div class="links">
-      <a href="https://youtube.com/@pratap.traders?si=sjyhUv3C1pd5VFcc" class="link-button youtube" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
-      <a href="https://instagram.com/pratap.traders" class="link-button instagram" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-      <a href="https://wa.me/your-number" class="link-button whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-      <a href="https://flipkart.com/store-link" class="link-button flipkart" target="_blank"><i class="fas fa-store"></i> Flipkart Store</a>
-    </div>
-
-    <footer>&copy; 2025 Pratap Trader's. All rights reserved.</footer>
+  <div class="links">
+    <a class="link-button youtube" href="https://youtube.com/@pratap.traders?si=sjyhUv3C1pd5VFcc" target="_blank">YouTube</a>
+    <a class="link-button instagram" href="https://instagram.com/pratap.traders" target="_blank">Instagram</a>
+    <a class="link-button whatsapp" href="https://wa.me/your-number" target="_blank">WhatsApp</a>
+    <a class="link-button flipkart" href="https://flipkart.com/store-link" target="_blank">Flipkart Store</a>
   </div>
 
-  <!-- Realistic Water Ripple Script -->
-  <script src="https://unpkg.com/ripple-canvas/dist/ripple-canvas.min.js"></script>
-  <script>
-    const ripple = new RippleCanvas({
-      canvas: document.getElementById('ripple'),
-      resolution: 256,
-      interactive: true,
-      dropRadius: 20,
-      perturbance: 0.04,
-    });
+  <footer>&copy; 2025 Pratap Trader's. All rights reserved.</footer>
+</div>
 
-    // Auto calm after 3s idle
-    let idleTimer;
-    function resetIdle() {
-      clearTimeout(idleTimer);
-      idleTimer = setTimeout(() => {
-        ripple.clear();
-      }, 3000);
+<div class="note">Click / drag anywhere to create realistic water ripples. Idle 3s → calm.</div>
+
+<script>
+/*
+  Self-contained ripple-distortion implementation.
+  If performance is poor, change SIM_SCALE to a smaller number (0.25 or 0.33).
+*/
+(() => {
+  const canvas = document.getElementById('rippleCanvas');
+  const ctx = canvas.getContext('2d', { alpha: false });
+
+  // Configure simulation resolution scaling for performance:
+  // Lower SIM_SCALE = faster but less detail.
+  let SIM_SCALE = (() => {
+    const maxDim = Math.max(window.innerWidth, window.innerHeight);
+    if (maxDim > 1600) return 0.5;
+    if (maxDim > 1200) return 0.6;
+    if (maxDim > 800) return 0.75;
+    return 0.92;
+  })();
+
+  let W = Math.max(64, Math.floor(window.innerWidth * SIM_SCALE));
+  let H = Math.max(48, Math.floor(window.innerHeight * SIM_SCALE));
+  let size = W * H;
+
+  // offscreen canvas to paint animated gradient (source image to sample from)
+  const bgCanvas = document.createElement('canvas');
+  const bgCtx = bgCanvas.getContext('2d');
+
+  // output buffer canvas (same internal resolution) - we draw this to visible canvas scaled
+  const outCanvas = document.createElement('canvas');
+  const outCtx = outCanvas.getContext('2d');
+
+  // Heightmap buffers for ripple simulation (classic 2-buffer method)
+  let heightA = new Float32Array(size);
+  let heightB = new Float32Array(size);
+  let damping = 0.9955; // damping (0.99..0.999) — lower = faster decay
+
+  // Parameters
+  let REFRACT = 18;          // how far the background is refracted by a unit slope (tweak for stronger/softer distortion)
+  let DROP_RADIUS = Math.max(3, Math.round(20 * SIM_SCALE)); // radius in simulation pixels for clicks
+  let CLICK_STRENGTH = 160; // magnitude added on click
+  let MOVE_STRENGTH = 20;   // magnitude added on mousemove/touchmove
+  let lastInteract = performance.now();
+
+  function resize() {
+    // recompute resolution if viewport changed
+    W = Math.max(64, Math.floor(window.innerWidth * SIM_SCALE));
+    H = Math.max(48, Math.floor(window.innerHeight * SIM_SCALE));
+    size = W * H;
+    canvas.width = W;
+    canvas.height = H;
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+
+    bgCanvas.width = W; bgCanvas.height = H;
+    outCanvas.width = W; outCanvas.height = H;
+
+    // reallocate buffers
+    heightA = new Float32Array(size);
+    heightB = new Float32Array(size);
+  }
+
+  resize();
+  window.addEventListener('resize', () => {
+    // throttle resize a bit
+    clearTimeout(window._ripple_resizetimer);
+    window._ripple_resizetimer = setTimeout(resize, 120);
+  });
+
+  // Animated gradient painter onto bgCanvas (uses HSL shifts)
+  function drawAnimatedGradient(t) {
+    // animate base hue over time
+    const baseHue = (t * 0.02) % 360;
+    const g = bgCtx.createLinearGradient(0, 0, W, H);
+    const stops = [
+      (baseHue + 0) % 360,
+      (baseHue + 40) % 360,
+      (baseHue + 80) % 360,
+      (baseHue + 140) % 360,
+      (baseHue + 200) % 360,
+      (baseHue + 260) % 360,
+      (baseHue + 320) % 360
+    ];
+    for (let i = 0; i < stops.length; i++) {
+      const pos = i / (stops.length - 1);
+      g.addColorStop(pos, `hsl(${stops[i]} 78% 52%)`);
     }
-    document.addEventListener('click', resetIdle);
-    document.addEventListener('mousemove', resetIdle);
-    document.addEventListener('touchmove', resetIdle);
-    resetIdle();
-  </script>
+    bgCtx.fillStyle = g;
+    bgCtx.fillRect(0, 0, W, H);
 
+    // subtle radial glow for premium look
+    const grad = bgCtx.createRadialGradient(W * 0.5, H * 0.35, 0, W * 0.5, H * 0.5, Math.max(W, H) * 0.9);
+    grad.addColorStop(0, 'rgba(255,255,255,0.04)');
+    grad.addColorStop(0.6, 'rgba(0,0,0,0.04)');
+    grad.addColorStop(1, 'rgba(0,0,0,0.15)');
+    bgCtx.fillStyle = grad;
+    bgCtx.fillRect(0, 0, W, H);
+  }
+
+  // ripple simulation step - optimized linear loop (skips borders)
+  function stepSimulation() {
+    // compute interior only (skip edges)
+    const w = W, h = H;
+    const last = heightA, curr = heightB;
+    // propagate
+    for (let y = 1; y < h - 1; y++) {
+      let base = y * w + 1;
+      let end = base + (w - 2);
+      for (let i = base; i < end; i++) {
+        // average of neighbors - current value to produce wave equation
+        const val = ((last[i - 1] + last[i + 1] + last[i - w] + last[i + w]) * 0.25) - curr[i];
+        curr[i] = val * damping;
+      }
+    }
+    // swap buffers
+    heightA = curr;
+    heightB = last;
+  }
+
+  // Disturb the height field at sim coords (cx,cy) with radius and strength
+  function disturbSim(cx, cy, radius, strength) {
+    const r2 = radius * radius | 0;
+    const w = W, h = H;
+    const startY = Math.max(1, Math.floor(cy - radius));
+    const endY = Math.min(h - 2, Math.floor(cy + radius));
+    for (let y = startY; y <= endY; y++) {
+      const dy = y - cy;
+      const dy2 = dy * dy;
+      const row = y * w;
+      const maxdx = Math.floor(Math.sqrt(r2 - dy2));
+      let startX = Math.max(1, Math.floor(cx - maxdx));
+      let endX = Math.min(w - 2, Math.floor(cx + maxdx));
+      for (let x = startX; x <= endX; x++) {
+        const dx = x - cx;
+        const d = Math.sqrt(dx * dx + dy2);
+        // linear falloff
+        const factor = 1 - (d / radius);
+        if (factor > 0) {
+          heightA[row + x] += strength * factor;
+        }
+      }
+    }
+  }
+
+  // Render pass: sample animated gradient and map through simulated normals -> produce displaced image
+  function render() {
+    // draw animated gradient into bg canvas
+    const now = performance.now();
+    drawAnimatedGradient(now);
+
+    // get pixel array of background
+    const bgImage = bgCtx.getImageData(0, 0, W, H);
+    const bgData = bgImage.data;
+
+    // create output image buffer
+    const outImage = outCtx.createImageData(W, H);
+    const outData = outImage.data;
+
+    // compute mapping per pixel using height differences (finite differences -> normal)
+    // We skip edges to avoid sampling overflow
+    for (let y = 1; y < H - 1; y++) {
+      let base = y * W + 1;
+      let rowTop = (y - 1) * W;
+      let rowBot = (y + 1) * W;
+      for (let x = 1; x < W - 1; x++) {
+        const i = base + (x - 1); // careful indexing
+        const idx = y * W + x;
+        // finite differences
+        const dx = heightA[idx - 1] - heightA[idx + 1];
+        const dy = heightA[idx - W] - heightA[idx + W];
+
+        // refract amount scaled by REFRACT and by sim resolution
+        let sx = Math.floor(x + dx * REFRACT);
+        let sy = Math.floor(y + dy * REFRACT);
+
+        // clamp sample coordinates
+        if (sx < 0) sx = 0;
+        if (sx >= W) sx = W - 1;
+        if (sy < 0) sy = 0;
+        if (sy >= H) sy = H - 1;
+
+        // fetch source pixel
+        const sIdx = (sy * W + sx) * 4;
+        const dIdx = idx * 4;
+        outData[dIdx] = bgData[sIdx];
+        outData[dIdx + 1] = bgData[sIdx + 1];
+        outData[dIdx + 2] = bgData[sIdx + 2];
+        outData[dIdx + 3] = 255;
+      }
+    }
+
+    // fill borders (copy bg directly for edges)
+    // top & bottom rows
+    for (let x = 0; x < W; x++) {
+      const topSrc = (0 * W + x) * 4;
+      const botSrc = ((H - 1) * W + x) * 4;
+      outData[topSrc] = bgData[topSrc]; outData[topSrc + 1] = bgData[topSrc + 1]; outData[topSrc + 2] = bgData[topSrc + 2]; outData[topSrc + 3] = 255;
+      outData[botSrc] = bgData[botSrc]; outData[botSrc + 1] = bgData[botSrc + 1]; outData[botSrc + 2] = bgData[botSrc + 2]; outData[botSrc + 3] = 255;
+    }
+    // left & right columns
+    for (let y = 0; y < H; y++) {
+      const leftIdx = (y * W + 0) * 4;
+      const rightIdx = (y * W + (W - 1)) * 4;
+      const leftSrc = leftIdx;
+      const rightSrc = rightIdx;
+      outData[leftIdx] = bgData[leftSrc]; outData[leftIdx + 1] = bgData[leftSrc + 1]; outData[leftIdx + 2] = bgData[leftSrc + 2]; outData[leftIdx + 3] = 255;
+      outData[rightIdx] = bgData[rightSrc]; outData[rightIdx + 1] = bgData[rightSrc + 1]; outData[rightIdx + 2] = bgData[rightSrc + 2]; outData[rightIdx + 3] = 255;
+    }
+
+    // draw the computed image on canvas (the DOM canvas is same internal resolution and CSS-scaled)
+    outCtx.putImageData(outImage, 0, 0);
+
+    // scale-draw outCanvas to the visible canvas context (ctx) -> here both are same size; draw directly
+    ctx.drawImage(outCanvas, 0, 0, W, H);
+
+  }
+
+  // main loop: update sim, render, request next
+  let running = true;
+  function frame() {
+    if (!running) return;
+    stepSimulation();
+    render();
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  // Interaction: clicks (strong) and moves (gentle)
+  let lastMoveTime = 0;
+  function makeInteraction(clientX, clientY, strength, radius) {
+    // convert viewport coords to simulation coords
+    const rectW = window.innerWidth;
+    const rectH = window.innerHeight;
+    const sx = Math.floor((clientX / rectW) * W);
+    const sy = Math.floor((clientY / rectH) * H);
+    disturbSim(sx, sy, radius, strength);
+    lastInteract = performance.now();
+  }
+
+  // mouse events
+  window.addEventListener('click', (e) => {
+    makeInteraction(e.clientX, e.clientY, CLICK_STRENGTH, DROP_RADIUS);
+    resetIdleTimer();
+  });
+
+  // throttle mousemove to avoid flooding
+  window.addEventListener('mousemove', (e) => {
+    const now = performance.now();
+    if (now - lastMoveTime > 40) { // ~25Hz
+      makeInteraction(e.clientX, e.clientY, MOVE_STRENGTH, Math.max(2, Math.round(DROP_RADIUS * 0.4)));
+      lastMoveTime = now;
+      resetIdleTimer();
+    }
+  });
+
+  // touch move / touchstart
+  window.addEventListener('touchstart', (e) => {
+    const t = e.touches[0];
+    makeInteraction(t.clientX, t.clientY, CLICK_STRENGTH * 0.8, DROP_RADIUS * 1.1);
+    resetIdleTimer();
+  }, {passive:true});
+  window.addEventListener('touchmove', (e) => {
+    const t = e.touches[0];
+    makeInteraction(t.clientX, t.clientY, MOVE_STRENGTH * 0.9, Math.max(2, Math.round(DROP_RADIUS * 0.4)));
+    resetIdleTimer();
+  }, {passive:true});
+
+  // Idle clear after 3s
+  let idleTimer = null;
+  function resetIdleTimer() {
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(() => {
+      // smooth clear - zero buffers
+      heightA.fill(0);
+      heightB.fill(0);
+    }, 3000);
+  }
+  resetIdleTimer();
+
+  // initial background draw to avoid blank on load
+  drawAnimatedGradient(performance.now());
+})();
+</script>
 </body>
 </html>
+
