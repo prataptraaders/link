@@ -1,234 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pratap Trader's</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-  <style>
-    :root { --bg-gradient: linear-gradient(270deg, #ff6b6b, #ffa500, #ffd700, #33cc99, #3399ff, #9933ff, #ff33aa); }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pratap Trader's</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<style>
+  :root { --bg-gradient: linear-gradient(270deg, #ff6b6b, #ffa500, #ffd700, #33cc99, #3399ff, #9933ff, #ff33aa); }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    padding: 20px;
+    background: var(--bg-gradient);
+    background-size: 1400% 1400%;
+    animation: gradientBG 25s ease infinite;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.8s ease;
+  }
 
-    body {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: #fff;
-      padding: 20px;
-      background: var(--bg-gradient);
-      background-size: 1400% 1400%;
-      animation: gradientBG 25s ease infinite;
-      position: relative;
-      overflow: hidden;
-      transition: background 0.8s ease;
-    }
+  body::before {
+    content: "";
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.45);
+    z-index: 0;
+    transition: background 0.8s ease;
+  }
 
-    body::before {
-      content: "";
-      position: absolute; top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.45);
-      z-index: 0;
-      transition: background 0.8s ease;
-    }
+  @keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
 
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+  canvas { position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; }
 
-    canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+  .container { position: relative; z-index:1; width: 100%; max-width: 400px; }
 
-    .container { position: relative; z-index: 1; width: 100%; max-width: 400px; }
+  .logo { width:120px; height:120px; border-radius:50%; object-fit:cover; border:3px solid #fff; margin-bottom:20px; animation:fadeIn 1s ease forwards; box-shadow:0 0 20px rgba(255,255,255,0.3); }
+  h1 { font-size:2.2em; margin-bottom:5px; animation:fadeIn 1.2s ease forwards; text-shadow:2px 2px 15px rgba(0,0,0,0.6); }
+  p { font-size:1em; color:#ddd; margin-bottom:30px; animation:fadeIn 1.4s ease forwards; }
+  .links { display:flex; flex-direction:column; gap:20px; width:100%; animation:fadeIn 1.6s ease forwards; }
 
-    .logo { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid #fff; margin-bottom: 20px; animation: fadeIn 1s ease forwards; box-shadow: 0 0 20px rgba(255,255,255,0.3); }
+  /* Apple-style swipe */
+  .swipe-btn {
+    position: relative;
+    border-radius: 50px;
+    overflow: hidden;
+    cursor: pointer;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.3);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .swipe-btn:hover { box-shadow:0 10px 30px rgba(0,0,0,0.5); transform:scale(1.02); }
 
-    h1 { font-size: 2.2em; margin-bottom: 5px; animation: fadeIn 1.2s ease forwards; text-shadow: 2px 2px 15px rgba(0,0,0,0.6); }
-    p { font-size: 1em; color: #ddd; margin-bottom: 30px; animation: fadeIn 1.4s ease forwards; }
+  .swipe-handle {
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    background:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.8em; color:#000;
+    position: relative; z-index:2;
+    box-shadow:0 4px 15px rgba(0,0,0,0.3);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    user-select:none;
+  }
 
-    .links { display: flex; flex-direction: column; gap: 20px; width: 100%; animation: fadeIn 1.6s ease forwards; }
+  .swipe-text {
+    position:absolute; left:20px; right:20px;
+    font-weight:600; color:#fff;
+    pointer-events:none;
+    font-size:1.1em;
+    text-align:center;
+  }
 
-    .swipe-btn {
-      position: relative;
-      border-radius: 50px;
-      overflow: hidden;
-      cursor: pointer;
-      height: 70px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-      transition: box-shadow 0.3s ease, transform 0.3s ease;
-      background: rgba(0,0,0,0.3);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255,255,255,0.3);
-    }
+  .swipe-arrow {
+    margin-left: 10px;
+    font-size:1.5em;
+    color:#fff;
+    animation: arrowSlide 1s infinite alternate;
+  }
 
-    .swipe-btn:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: scale(1.02); }
+  @keyframes arrowSlide { 0%{transform:translateX(0);} 100%{transform:translateX(10px);} }
 
-    .swipe-handle {
-      width: 70px; height: 70px;
-      border-radius: 50%;
-      background: #fff;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.8em; color: #000;
-      position: relative; z-index: 2;
-      touch-action: pan-x;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      transition: box-shadow 0.3s ease, transform 0.3s ease;
-    }
-
-    .swipe-handle:hover { box-shadow: 0 6px 25px rgba(0,0,0,0.4); transform: scale(1.05); }
-
-    .swipe-text {
-      position: absolute; left: 90px; right: 20px;
-      font-weight: 600; color: #fff;
-      pointer-events: none;
-      font-size: 1.1em;
-    }
-
-    footer { margin-top: 40px; font-size: 0.8em; color: #ccc; animation: fadeIn 1.8s ease forwards; }
-    @keyframes fadeIn { 0% {opacity: 0; transform: translateY(20px);} 100% {opacity:1; transform:translateY(0);} }
-
-  </style>
+  footer { margin-top:40px; font-size:0.8em; color:#ccc; animation:fadeIn 1.8s ease forwards; }
+  @keyframes fadeIn { 0%{opacity:0; transform:translateY(20px);} 100%{opacity:1; transform:translateY(0);} }
+</style>
 </head>
 <body>
-  <canvas id="rippleCanvas"></canvas>
+<canvas id="rippleCanvas"></canvas>
 
-  <div class="container">
-    <img src="logo.png" alt="Pratap Trader's Logo" class="logo">
-    <h1>Pratap Trader's</h1>
-    <p>Premium Fashion for Men & Women</p>
+<div class="container">
+  <img src="logo.png" alt="Pratap Trader's Logo" class="logo">
+  <h1>Pratap Trader's</h1>
+  <p>Premium Fashion for Men & Women</p>
 
-    <div class="links">
-      <!-- YouTube -->
-      <div class="swipe-btn" data-bg="linear-gradient(135deg,#FF0000,#cc0000)" data-link="https://youtube.com/@pratap.traders?si=sjyhUv3C1pd5VFcc">
-        <div class="swipe-handle"><img src="https://img.icons8.com/color/48/000000/youtube-play.png" alt="YouTube Logo" width="30"></div>
-        <div class="swipe-text">Swipe to YouTube</div>
-      </div>
-
-      <!-- Instagram -->
-      <div class="swipe-btn" data-bg="linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)" data-link="https://instagram.com/pratap.traders">
-        <div class="swipe-handle"><img src="https://img.icons8.com/color/48/000000/instagram-new.png" alt="Instagram Logo" width="30"></div>
-        <div class="swipe-text">Swipe to Instagram</div>
-      </div>
-
-      <!-- WhatsApp -->
-      <div class="swipe-btn" data-bg="linear-gradient(135deg,#25D366,#128C7E)" data-link="https://wa.me/your-number">
-        <div class="swipe-handle"><img src="https://img.icons8.com/color/48/000000/whatsapp.png" alt="WhatsApp Logo" width="30"></div>
-        <div class="swipe-text">Swipe to WhatsApp</div>
-      </div>
+  <div class="links">
+    <!-- YouTube -->
+    <div class="swipe-btn" data-bg="linear-gradient(135deg,#FF0000,#cc0000)" data-link="https://youtube.com/@pratap.traders?si=sjyhUv3C1pd5VFcc">
+      <div class="swipe-handle"><img src="https://img.icons8.com/color/48/000000/youtube-play.png" width="30"/></div>
+      <div class="swipe-text">Swipe to YouTube <span class="swipe-arrow">→</span></div>
     </div>
 
-    <footer>&copy; 2025 Pratap Trader's. All rights reserved.</footer>
+    <!-- Instagram -->
+    <div class="swipe-btn" data-bg="linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)" data-link="https://instagram.com/pratap.traders">
+      <div class="swipe-handle"><img src="https://img.icons8.com/color/48/000000/instagram-new.png" width="30"/></div>
+      <div class="swipe-text">Swipe to Instagram <span class="swipe-arrow">→</span></div>
+    </div>
+
+    <!-- WhatsApp -->
+    <div class="swipe-btn" data-bg="linear-gradient(135deg,#25D366,#128C7E)" data-link="https://wa.me/your-number">
+      <div class="swipe-handle"><img src="https://img.icons8.com/color/48/000000/whatsapp.png" width="30"/></div>
+      <div class="swipe-text">Swipe to WhatsApp <span class="swipe-arrow">→</span></div>
+    </div>
   </div>
 
-  <script>
-    const buttons = document.querySelectorAll('.swipe-btn');
-    const body = document.body;
-    const originalGradient = getComputedStyle(body).backgroundImage;
+  <footer>&copy; 2025 Pratap Trader's. All rights reserved.</footer>
+</div>
 
-    // Hover preview gradient
-    buttons.forEach(btn => {
-      btn.addEventListener('mouseenter', () => {
-        body.style.background = btn.getAttribute('data-bg');
-        body.style.backgroundSize = 'cover';
-        body.style.animation = 'none';
-      });
-      btn.addEventListener('mouseleave', () => {
-        body.style.background = originalGradient;
-        body.style.backgroundSize = '1400% 1400%';
-        body.style.animation = 'gradientBG 25s ease infinite';
-      });
-    });
+<script>
+const buttons = document.querySelectorAll('.swipe-btn');
+const body = document.body;
+const originalGradient = getComputedStyle(body).backgroundImage;
 
-    // Swipe logic (works on PC and mobile)
-    buttons.forEach(btn => {
-      const handle = btn.querySelector('.swipe-handle');
-      let isDragging = false;
-      let startX = 0;
-      let currentX = 0;
+// Hover gradient preview
+buttons.forEach(btn => {
+  btn.addEventListener('mouseenter', () => {
+    body.style.background = btn.getAttribute('data-bg');
+    body.style.backgroundSize = 'cover';
+    body.style.animation = 'none';
+  });
+  btn.addEventListener('mouseleave', () => {
+    body.style.background = originalGradient;
+    body.style.backgroundSize = '1400% 1400%';
+    body.style.animation = 'gradientBG 25s ease infinite';
+  });
+});
 
-      const maxDrag = btn.offsetWidth - handle.offsetWidth - 5;
+// Apple-style swipe logic
+buttons.forEach(btn => {
+  const handle = btn.querySelector('.swipe-handle');
+  let isDragging = false, startX = 0, currentX = 0;
+  const maxDrag = btn.offsetWidth - handle.offsetWidth - 5;
 
-      handle.addEventListener('pointerdown', e => {
-        isDragging = true;
-        startX = e.clientX - handle.offsetLeft;
-        handle.setPointerCapture(e.pointerId);
-      });
+  const startDrag = (clientX) => { isDragging=true; startX=clientX-handle.offsetLeft; };
+  const moveDrag = (clientX) => {
+    if(!isDragging) return;
+    currentX = clientX - startX;
+    if(currentX<0) currentX=0;
+    if(currentX>maxDrag) currentX=maxDrag;
+    handle.style.transform=`translateX(${currentX}px)`;
+  };
+  const endDrag = () => { isDragging=false; if(currentX>=maxDrag) window.open(btn.getAttribute('data-link'), '_blank'); handle.style.transform='translateX(0)'; };
 
-      handle.addEventListener('pointermove', e => {
-        if(!isDragging) return;
-        currentX = e.clientX - startX;
-        if(currentX < 0) currentX = 0;
-        if(currentX > maxDrag) currentX = maxDrag;
-        handle.style.transform = `translateX(${currentX}px)`;
-      });
+  handle.addEventListener('pointerdown', e=>{ startDrag(e.clientX); handle.setPointerCapture(e.pointerId); });
+  handle.addEventListener('pointermove', e=>{ moveDrag(e.clientX); });
+  handle.addEventListener('pointerup', e=>{ endDrag(); });
 
-      handle.addEventListener('pointerup', e => {
-        isDragging = false;
-        if(currentX >= maxDrag) window.open(btn.getAttribute('data-link'), '_blank');
-        handle.style.transform = 'translateX(0)';
-      });
+  handle.addEventListener('touchstart', e=>{ startDrag(e.touches[0].clientX); });
+  handle.addEventListener('touchmove', e=>{ moveDrag(e.touches[0].clientX); });
+  handle.addEventListener('touchend', e=>{ endDrag(); });
+});
 
-      // Touch support
-      handle.addEventListener('touchstart', e => {
-        isDragging = true;
-        startX = e.touches[0].clientX - handle.offsetLeft;
-      });
-
-      handle.addEventListener('touchmove', e => {
-        if(!isDragging) return;
-        currentX = e.touches[0].clientX - startX;
-        if(currentX < 0) currentX = 0;
-        if(currentX > maxDrag) currentX = maxDrag;
-        handle.style.transform = `translateX(${currentX}px)`;
-      });
-
-      handle.addEventListener('touchend', e => {
-        isDragging = false;
-        if(currentX >= maxDrag) window.open(btn.getAttribute('data-link'), '_blank');
-        handle.style.transform = 'translateX(0)';
-      });
-    });
-
-    // Ripple effect
-    const canvas = document.getElementById("rippleCanvas");
-    const ctx = canvas.getContext("2d");
-    let ripples = [];
-
-    function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-
-    document.body.addEventListener("click", (e) => { ripples.push({ x:e.clientX, y:e.clientY, radius:0, alpha:0.6 }); });
-
-    function draw() {
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      ripples.forEach((r,i)=>{
-        ctx.beginPath();
-        ctx.arc(r.x,r.y,r.radius,0,2*Math.PI);
-        ctx.strokeStyle = `rgba(255,255,255,${r.alpha})`;
-        ctx.lineWidth = 3;
-        ctx.stroke();
-        r.radius +=4;
-        r.alpha -=0.01;
-        if(r.alpha<=0) ripples.splice(i,1);
-      });
-      requestAnimationFrame(draw);
-    }
-    draw();
-
-    let idleTimer;
-    function resetIdle() { clearTimeout(idleTimer); idleTimer = setTimeout(()=>{ ripples=[]; },3000); }
-    document.body.addEventListener("click", resetIdle);
-    resetIdle();
-  </script>
+// Ripple effect
+const canvas=document.getElementById("rippleCanvas");
+const ctx=canvas.getContext("2d");
+let ripples=[];
+function resizeCanvas(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
+window.addEventListener("resize", resizeCanvas); resizeCanvas();
+document.body.addEventListener("click", e=>{ ripples.push({x:e.clientX,y:e.clientY,radius:0,alpha:0.6}); });
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ripples.forEach((r,i)=>{
+    ctx.beginPath();
+    ctx.arc(r.x,r.y,r.radius,0,2*Math.PI);
+    ctx.strokeStyle=`rgba(255,255,255,${r.alpha})`;
+    ctx.lineWidth=3;
+    ctx.stroke();
+    r.radius+=4; r.alpha-=0.01;
+    if(r.alpha<=0) ripples.splice(i,1);
+  });
+  requestAnimationFrame(draw);
+}
+draw();
+let idleTimer;
+function resetIdle(){ clearTimeout(idleTimer); idleTimer=setTimeout(()=>{ ripples=[]; },3000); }
+document.body.addEventListener("click", resetIdle); resetIdle();
+</script>
 </body>
 </html>
