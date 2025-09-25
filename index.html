@@ -7,33 +7,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <style>
-  * {
-    margin: 0; padding: 0; box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-  }
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
 
   body {
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: #fff;
-    overflow: hidden;
-    position: relative;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; color: #fff;
+    overflow: hidden; position: relative;
     background: linear-gradient(270deg, #ff6b6b, #ffa500, #ffd700, #33cc99, #3399ff, #9933ff, #ff33aa);
     background-size: 1400% 1400%;
     animation: gradientBG 25s ease infinite;
-    transition: background 0.8s ease;
-  }
-
-  body::before {
-    content: "";
-    position: absolute;
-    top:0; left:0; width:100%; height:100%;
-    background: rgba(0,0,0,0.45);
-    z-index: 0;
   }
 
   @keyframes gradientBG {
@@ -42,37 +26,37 @@
     100% {background-position: 0% 50%;}
   }
 
-  .container {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    max-width: 400px;
+  body::before {
+    content:"";
+    position:absolute; top:0; left:0;
+    width:100%; height:100%;
+    background: rgba(0,0,0,0.45);
+    z-index:0;
   }
 
-  .logo { width:120px; height:120px; border-radius:50%; border:3px solid #fff; margin-bottom:20px; box-shadow:0 0 20px rgba(255,255,255,0.3); }
+  canvas {
+    position:absolute; top:0; left:0;
+    width:100%; height:100%;
+    z-index:1; pointer-events:none;
+  }
 
-  h1 { font-size:2.2em; color:#fff; margin-bottom:5px; text-shadow:2px 2px 15px rgba(0,0,0,0.6); }
-
-  p { font-size:1em; color:#ddd; margin-bottom:30px; }
-
-  .links { display:flex; flex-direction:column; gap:15px; width:100%; }
-
+  .container { position:relative; z-index:2; max-width:400px; }
+  .logo { width:120px; height:120px; border-radius:50%; border:3px solid #fff; margin-bottom:20px; }
+  h1 { font-size:2.2em; margin-bottom:5px; }
+  p { font-size:1em; margin-bottom:30px; color:#ddd; }
+  .links { display:flex; flex-direction:column; gap:15px; }
   .link-button {
     display:flex; align-items:center; justify-content:center; gap:10px;
     padding:14px 20px; border-radius:30px; text-decoration:none;
-    font-weight:600; color:#fff; background: rgba(0,0,0,0.4);
-    backdrop-filter: blur(8px); border:1px solid rgba(255,255,255,0.5);
-    transition: all 0.3s ease; box-shadow:0 4px 20px rgba(0,0,0,0.3);
+    font-weight:600; color:#fff;
+    background: rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.5);
+    backdrop-filter: blur(8px); transition:all 0.3s ease;
   }
-
-  .youtube:hover { background-color:#FF0000; box-shadow:0 6px 25px rgba(255,0,0,0.5);}
-  .instagram:hover { background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); box-shadow:0 6px 25px rgba(236,64,122,0.5);}
-  .whatsapp:hover { background-color:#25D366; box-shadow:0 6px 25px rgba(37,211,102,0.5);}
-  .flipkart:hover { background-color:#2874F0; box-shadow:0 6px 25px rgba(40,116,240,0.5);}
-
+  .youtube:hover { background:#FF0000; }
+  .instagram:hover { background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);}
+  .whatsapp:hover { background:#25D366; }
+  .flipkart:hover { background:#2874F0; }
   footer { margin-top:40px; font-size:0.8em; color:#ccc; }
-  
-  canvas { position: absolute; top:0; left:0; z-index:1; pointer-events:none; }
 </style>
 </head>
 <body>
@@ -95,57 +79,49 @@
 </div>
 
 <script>
-const canvas = document.getElementById('rippleCanvas');
-const ctx = canvas.getContext('2d');
-let width = canvas.width = window.innerWidth;
-let height = canvas.height = window.innerHeight;
-
+const canvas = document.getElementById("rippleCanvas");
+const ctx = canvas.getContext("2d");
+let width, height;
 let ripples = [];
-let resetTimeout;
+
+function resizeCanvas() {
+  width = canvas.width = window.innerWidth;
+  height = canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
 
 class Ripple {
   constructor(x, y) {
-    this.x = x;
-    this.y = y;
-    this.radius = 0;
-    this.alpha = 0.5;
+    this.x = x; this.y = y;
+    this.radius = 0; this.opacity = 0.5;
   }
   draw() {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2);
-    ctx.strokeStyle = `rgba(255,255,255,${this.alpha})`;
-    ctx.lineWidth = 3;
+    ctx.strokeStyle = `rgba(255,255,255,${this.opacity})`;
+    ctx.lineWidth = 2;
     ctx.stroke();
   }
   update() {
-    this.radius += 3;
-    this.alpha -= 0.01;
+    this.radius += 4;
+    this.opacity -= 0.007;
   }
 }
 
 function animate() {
-  ctx.clearRect(0, 0, width, height);
-  ripples.forEach((r, i) => {
+  ctx.clearRect(0,0,width,height);
+  ripples.forEach((r,i) => {
     r.update();
     r.draw();
-    if(r.alpha <= 0) ripples.splice(i,1);
+    if(r.opacity <= 0) ripples.splice(i,1);
   });
   requestAnimationFrame(animate);
 }
 animate();
 
-document.body.addEventListener('click', e => {
+document.body.addEventListener("click", e => {
   ripples.push(new Ripple(e.clientX, e.clientY));
-  
-  clearTimeout(resetTimeout);
-  resetTimeout = setTimeout(() => {
-    ripples = []; // clear ripples after 3 seconds inactivity
-  }, 3000);
-});
-
-window.addEventListener('resize', () => {
-  width = canvas.width = window.innerWidth;
-  height = canvas.height = window.innerHeight;
 });
 </script>
 
