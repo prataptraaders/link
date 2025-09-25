@@ -3,101 +3,176 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ripple Background</title>
+  <title>Pratap Trader's</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <style>
     :root {
       --bg-gradient: linear-gradient(270deg, #ff6b6b, #ffa500, #ffd700, #33cc99, #3399ff, #9933ff, #ff33aa);
     }
-    body {
+
+    * {
+      box-sizing: border-box;
       margin: 0;
-      height: 100vh;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+      padding: 20px;
       background: var(--bg-gradient);
       background-size: 1400% 1400%;
       animation: gradientBG 25s ease infinite;
-      overflow: hidden;
       position: relative;
+      overflow: hidden;
+      transition: background 0.8s ease;
     }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 0;
+      transition: background 0.8s ease;
+    }
+
     @keyframes gradientBG {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-    canvas {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none; /* background stays clickable */
-    }
-    .content {
+
+    .container {
       position: relative;
       z-index: 1;
-      color: white;
-      text-align: center;
-      top: 40%;
-      font-family: Arial, sans-serif;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .logo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #fff;
+      margin-bottom: 20px;
+      animation: fadeIn 1s ease forwards;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+
+    h1 {
+      font-size: 2.2em;
+      color: #fff;
+      margin-bottom: 5px;
+      animation: fadeIn 1.2s ease forwards;
+      text-shadow: 2px 2px 15px rgba(0,0,0,0.6);
+    }
+
+    p {
+      font-size: 1em;
+      color: #ddd;
+      margin-bottom: 30px;
+      animation: fadeIn 1.4s ease forwards;
+    }
+
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 100%;
+      animation: fadeIn 1.6s ease forwards;
+    }
+
+    .link-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      color: #fff;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    /* Button hover colors remain */
+    .youtube:hover { background-color: #FF0000; box-shadow: 0 6px 25px rgba(255,0,0,0.5); }
+    .instagram:hover { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); box-shadow: 0 6px 25px rgba(236,64,122,0.5); }
+    .whatsapp:hover { background-color: #25D366; box-shadow: 0 6px 25px rgba(37,211,102,0.5); }
+    .flipkart:hover { background-color: #2874F0; box-shadow: 0 6px 25px rgba(40,116,240,0.5); }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.8em;
+      color: #ccc;
+      animation: fadeIn 1.8s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      0% {opacity: 0; transform: translateY(20px);}
+      100% {opacity: 1; transform: translateY(0);}
     }
   </style>
 </head>
 <body>
-  <canvas id="rippleCanvas"></canvas>
 
-  <div class="content">
+  <div class="container">
+    <img src="logo.png" alt="Pratap Trader's Logo" class="logo">
     <h1>Pratap Trader's</h1>
     <p>Premium Fashion for Men & Women</p>
+
+    <div class="links">
+      <a href="https://youtube.com/@pratap.traders?si=sjyhUv3C1pd5VFcc" class="link-button youtube" data-bg="linear-gradient(135deg,#FF0000,#cc0000)" target="_blank">
+        <i class="fab fa-youtube"></i> YouTube
+      </a>
+      <a href="https://instagram.com/pratap.traders" class="link-button instagram" data-bg="linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)" target="_blank">
+        <i class="fab fa-instagram"></i> Instagram
+      </a>
+      <a href="https://wa.me/your-number" class="link-button whatsapp" data-bg="linear-gradient(135deg,#25D366,#128C7E)" target="_blank">
+        <i class="fab fa-whatsapp"></i> WhatsApp
+      </a>
+      <a href="https://flipkart.com/store-link" class="link-button flipkart" data-bg="linear-gradient(135deg,#2874F0,#ffcc00)" target="_blank">
+        <i class="fas fa-store"></i> Flipkart Store
+      </a>
+    </div>
+
+    <footer>
+      &copy; 2025 Pratap Trader's. All rights reserved.
+    </footer>
   </div>
 
   <script>
-    const canvas = document.getElementById("rippleCanvas");
-    const ctx = canvas.getContext("2d");
-    let ripples = [];
+    const buttons = document.querySelectorAll('.link-button');
+    const body = document.body;
 
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
+    buttons.forEach(button => {
+      const originalBG = getComputedStyle(body).backgroundImage;
 
-    // Add ripple on click/tap
-    document.body.addEventListener("click", (e) => {
-      ripples.push({ 
-        x: e.clientX, 
-        y: e.clientY, 
-        radius: 0, 
-        alpha: 0.6 
+      button.addEventListener('mouseenter', () => {
+        body.style.background = button.getAttribute('data-bg');
+        body.style.transition = 'background 0.8s ease';
+      });
+
+      button.addEventListener('mouseleave', () => {
+        body.style.background = originalBG;
       });
     });
-
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      ripples.forEach((r, i) => {
-        ctx.beginPath();
-        ctx.arc(r.x, r.y, r.radius, 0, 2 * Math.PI);
-        ctx.strokeStyle = `rgba(255,255,255,${r.alpha})`;
-        ctx.lineWidth = 3;
-        ctx.stroke();
-
-        // Update ripple
-        r.radius += 4;
-        r.alpha -= 0.01;
-
-        if (r.alpha <= 0) ripples.splice(i, 1);
-      });
-
-      requestAnimationFrame(draw);
-    }
-    draw();
-
-    // Reset to calm state after 3s idle
-    let idleTimer;
-    function resetIdle() {
-      clearTimeout(idleTimer);
-      idleTimer = setTimeout(() => { ripples = []; }, 3000);
-    }
-    document.body.addEventListener("click", resetIdle);
-    resetIdle();
   </script>
+
 </body>
 </html>
+
