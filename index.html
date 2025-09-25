@@ -68,28 +68,51 @@
       box-shadow: 0 0 20px rgba(255,255,255,0.3);
     }
 
-    h1 { font-size: 2.2em; color: #fff; margin-bottom: 5px; animation: fadeIn 1.2s ease forwards; text-shadow: 2px 2px 15px rgba(0,0,0,0.6); }
+    h1 { font-size: 2.2em; margin-bottom: 5px; animation: fadeIn 1.2s ease forwards; text-shadow: 2px 2px 15px rgba(0,0,0,0.6); }
     p { font-size: 1em; color: #ddd; margin-bottom: 30px; animation: fadeIn 1.4s ease forwards; }
 
-    .links { display: flex; flex-direction: column; gap: 15px; width: 100%; animation: fadeIn 1.6s ease forwards; }
+    .links { display: flex; flex-direction: column; gap: 20px; width: 100%; animation: fadeIn 1.6s ease forwards; }
 
-    .link-button {
-      display: flex; align-items: center; justify-content: center; gap: 10px;
-      padding: 14px 20px; border-radius: 30px;
-      text-decoration: none; font-weight: 600; color: #fff;
-      background: rgba(0,0,0,0.4); backdrop-filter: blur(8px);
+    .swipe-btn {
+      position: relative;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(8px);
+      border-radius: 50px;
       border: 1px solid rgba(255,255,255,0.5);
-      transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      overflow: hidden;
+      cursor: pointer;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     }
 
-    .youtube:hover { background-color: #FF0000; box-shadow: 0 6px 25px rgba(255,0,0,0.5); }
-    .instagram:hover { background: linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); box-shadow: 0 6px 25px rgba(236,64,122,0.5); }
-    .whatsapp:hover { background-color: #25D366; box-shadow: 0 6px 25px rgba(37,211,102,0.5); }
-    .flipkart:hover { background-color: #2874F0; box-shadow: 0 6px 25px rgba(40,116,240,0.5); }
+    .swipe-btn:hover { box-shadow: 0 6px 25px rgba(255,255,255,0.3); }
+
+    .swipe-handle {
+      width: 60px; height: 60px;
+      background: #fff; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #000; font-size: 1.5em;
+      transition: left 0.3s ease;
+      position: relative;
+      z-index: 2;
+      touch-action: pan-x;
+    }
+
+    .swipe-text {
+      position: absolute; left: 70px; right: 10px;
+      font-weight: 600; color: #fff;
+      pointer-events: none;
+      font-size: 1.1em;
+    }
 
     footer { margin-top: 40px; font-size: 0.8em; color: #ccc; animation: fadeIn 1.8s ease forwards; }
 
     @keyframes fadeIn { 0% {opacity: 0; transform: translateY(20px);} 100% {opacity:1; transform:translateY(0);} }
+
   </style>
 </head>
 <body>
@@ -101,31 +124,76 @@
     <p>Premium Fashion for Men & Women</p>
 
     <div class="links">
-      <a href="https://youtube.com/@pratap.traders?si=sjyhUv3C1pd5VFcc" class="link-button youtube" data-bg="linear-gradient(135deg,#FF0000,#cc0000)" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
-      <a href="https://instagram.com/pratap.traders" class="link-button instagram" data-bg="linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-      <a href="https://wa.me/your-number" class="link-button whatsapp" data-bg="linear-gradient(135deg,#25D366,#128C7E)" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-      <a href="https://flipkart.com/store-link" class="link-button flipkart" data-bg="linear-gradient(135deg,#2874F0,#ffcc00)" target="_blank"><i class="fas fa-store"></i> Flipkart Store</a>
+      <!-- YouTube Swipe Button -->
+      <div class="swipe-btn" data-bg="linear-gradient(135deg,#FF0000,#cc0000)" data-link="https://youtube.com/@pratap.traders?si=sjyhUv3C1pd5VFcc">
+        <div class="swipe-handle"><i class="fab fa-youtube"></i></div>
+        <div class="swipe-text">Swipe to YouTube</div>
+      </div>
+
+      <!-- Instagram Swipe Button -->
+      <div class="swipe-btn" data-bg="linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)" data-link="https://instagram.com/pratap.traders">
+        <div class="swipe-handle"><i class="fab fa-instagram"></i></div>
+        <div class="swipe-text">Swipe to Instagram</div>
+      </div>
+
+      <!-- WhatsApp Swipe Button -->
+      <div class="swipe-btn" data-bg="linear-gradient(135deg,#25D366,#128C7E)" data-link="https://wa.me/your-number">
+        <div class="swipe-handle"><i class="fab fa-whatsapp"></i></div>
+        <div class="swipe-text">Swipe to WhatsApp</div>
+      </div>
     </div>
 
     <footer>&copy; 2025 Pratap Trader's. All rights reserved.</footer>
   </div>
 
   <script>
-    const buttons = document.querySelectorAll('.link-button');
+    const buttons = document.querySelectorAll('.swipe-btn');
     const body = document.body;
     const originalGradient = getComputedStyle(body).backgroundImage;
 
-    buttons.forEach(button => {
-      button.addEventListener('mouseenter', () => {
-        body.style.background = button.getAttribute('data-bg');
+    // Hover preview
+    buttons.forEach(btn => {
+      btn.addEventListener('mouseenter', () => {
+        body.style.background = btn.getAttribute('data-bg');
         body.style.backgroundSize = 'cover';
-        body.style.animation = 'none'; // pause original gradient
+        body.style.animation = 'none';
       });
-
-      button.addEventListener('mouseleave', () => {
+      btn.addEventListener('mouseleave', () => {
         body.style.background = originalGradient;
         body.style.backgroundSize = '1400% 1400%';
-        body.style.animation = 'gradientBG 25s ease infinite'; // resume gradient
+        body.style.animation = 'gradientBG 25s ease infinite';
+      });
+    });
+
+    // Swipe logic
+    buttons.forEach(btn => {
+      const handle = btn.querySelector('.swipe-handle');
+      let isDragging = false;
+      let startX, currentX;
+
+      const maxDrag = btn.offsetWidth - handle.offsetWidth - 5;
+
+      handle.addEventListener('pointerdown', e => {
+        isDragging = true;
+        startX = e.clientX - handle.offsetLeft;
+        handle.setPointerCapture(e.pointerId);
+      });
+
+      handle.addEventListener('pointermove', e => {
+        if (!isDragging) return;
+        currentX = e.clientX - startX;
+        if (currentX < 0) currentX = 0;
+        if (currentX > maxDrag) currentX = maxDrag;
+        handle.style.transform = `translateX(${currentX}px)`;
+      });
+
+      handle.addEventListener('pointerup', e => {
+        isDragging = false;
+        if (currentX >= maxDrag) {
+          window.open(btn.getAttribute('data-link'), '_blank');
+        }
+        // reset
+        handle.style.transform = 'translateX(0)';
       });
     });
 
@@ -169,6 +237,7 @@
     }
     document.body.addEventListener("click", resetIdle);
     resetIdle();
+
   </script>
 </body>
 </html>
