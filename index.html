@@ -73,37 +73,41 @@
 
     .links { display: flex; flex-direction: column; gap: 20px; width: 100%; animation: fadeIn 1.6s ease forwards; }
 
+    /* Premium swipe button styles */
     .swipe-btn {
       position: relative;
-      background: rgba(0,0,0,0.4);
-      backdrop-filter: blur(8px);
       border-radius: 50px;
-      border: 1px solid rgba(255,255,255,0.5);
       overflow: hidden;
       cursor: pointer;
-      height: 60px;
+      height: 70px;
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      transition: background 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      background: rgba(0,0,0,0.3);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.3);
     }
 
-    .swipe-btn:hover { box-shadow: 0 6px 25px rgba(255,255,255,0.3); }
+    .swipe-btn:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: scale(1.02); }
 
     .swipe-handle {
-      width: 60px; height: 60px;
-      background: #fff; border-radius: 50%;
+      width: 70px; height: 70px;
+      border-radius: 50%;
+      background: #fff;
       display: flex; align-items: center; justify-content: center;
-      color: #000; font-size: 1.5em;
-      transition: left 0.3s ease;
-      position: relative;
-      z-index: 2;
+      font-size: 1.8em; color: #000;
+      position: relative; z-index: 2;
       touch-action: pan-x;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
     }
 
+    .swipe-handle:hover { box-shadow: 0 6px 25px rgba(0,0,0,0.4); transform: scale(1.05); }
+
     .swipe-text {
-      position: absolute; left: 70px; right: 10px;
+      position: absolute; left: 90px; right: 20px;
       font-weight: 600; color: #fff;
       pointer-events: none;
       font-size: 1.1em;
@@ -112,7 +116,6 @@
     footer { margin-top: 40px; font-size: 0.8em; color: #ccc; animation: fadeIn 1.8s ease forwards; }
 
     @keyframes fadeIn { 0% {opacity: 0; transform: translateY(20px);} 100% {opacity:1; transform:translateY(0);} }
-
   </style>
 </head>
 <body>
@@ -124,21 +127,21 @@
     <p>Premium Fashion for Men & Women</p>
 
     <div class="links">
-      <!-- YouTube Swipe Button -->
+      <!-- YouTube -->
       <div class="swipe-btn" data-bg="linear-gradient(135deg,#FF0000,#cc0000)" data-link="https://youtube.com/@pratap.traders?si=sjyhUv3C1pd5VFcc">
-        <div class="swipe-handle"><i class="fab fa-youtube"></i></div>
+        <div class="swipe-handle"><img src="https://img.icons8.com/color/48/000000/youtube-play.png" alt="YouTube Logo" width="30"></div>
         <div class="swipe-text">Swipe to YouTube</div>
       </div>
 
-      <!-- Instagram Swipe Button -->
+      <!-- Instagram -->
       <div class="swipe-btn" data-bg="linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)" data-link="https://instagram.com/pratap.traders">
-        <div class="swipe-handle"><i class="fab fa-instagram"></i></div>
+        <div class="swipe-handle"><img src="https://img.icons8.com/color/48/000000/instagram-new.png" alt="Instagram Logo" width="30"></div>
         <div class="swipe-text">Swipe to Instagram</div>
       </div>
 
-      <!-- WhatsApp Swipe Button -->
+      <!-- WhatsApp -->
       <div class="swipe-btn" data-bg="linear-gradient(135deg,#25D366,#128C7E)" data-link="https://wa.me/your-number">
-        <div class="swipe-handle"><i class="fab fa-whatsapp"></i></div>
+        <div class="swipe-handle"><img src="https://img.icons8.com/color/48/000000/whatsapp.png" alt="WhatsApp Logo" width="30"></div>
         <div class="swipe-text">Swipe to WhatsApp</div>
       </div>
     </div>
@@ -151,7 +154,7 @@
     const body = document.body;
     const originalGradient = getComputedStyle(body).backgroundImage;
 
-    // Hover preview
+    // Hover preview gradient
     buttons.forEach(btn => {
       btn.addEventListener('mouseenter', () => {
         body.style.background = btn.getAttribute('data-bg');
@@ -170,7 +173,6 @@
       const handle = btn.querySelector('.swipe-handle');
       let isDragging = false;
       let startX, currentX;
-
       const maxDrag = btn.offsetWidth - handle.offsetWidth - 5;
 
       handle.addEventListener('pointerdown', e => {
@@ -189,10 +191,7 @@
 
       handle.addEventListener('pointerup', e => {
         isDragging = false;
-        if (currentX >= maxDrag) {
-          window.open(btn.getAttribute('data-link'), '_blank');
-        }
-        // reset
+        if (currentX >= maxDrag) window.open(btn.getAttribute('data-link'), '_blank');
         handle.style.transform = 'translateX(0)';
       });
     });
@@ -229,15 +228,10 @@
     }
     draw();
 
-    // Reset ripples after 3s idle
     let idleTimer;
-    function resetIdle() {
-      clearTimeout(idleTimer);
-      idleTimer = setTimeout(()=>{ ripples=[]; },3000);
-    }
+    function resetIdle() { clearTimeout(idleTimer); idleTimer = setTimeout(()=>{ ripples=[]; },3000); }
     document.body.addEventListener("click", resetIdle);
     resetIdle();
-
   </script>
 </body>
 </html>
