@@ -1,181 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pratap Trader's</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-  <style>
-    :root {
-      --bg-gradient: linear-gradient(270deg, #ff6b6b, #ffa500, #ffd700, #33cc99, #3399ff, #9933ff, #ff33aa);
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pratap Trader's</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<style>
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Poppins', sans-serif;
-    }
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(270deg, #ff6b6b, #ffa500, #ffd700, #33cc99, #3399ff, #9933ff, #ff33aa);
+    background-size: 1400% 1400%;
+    animation: gradientBG 25s ease infinite;
+    transition: background 0.8s ease;
+  }
 
-    body {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: #fff;
-      padding: 20px;
-      background: var(--bg-gradient);
-      background-size: 1400% 1400%;
-      animation: gradientBG 25s ease infinite;
-      position: relative;
-      overflow: hidden;
-      transition: background 0.8s ease;
-    }
+  body::before {
+    content: "";
+    position: absolute;
+    top:0; left:0; width:100%; height:100%;
+    background: rgba(0,0,0,0.45);
+    z-index: 0;
+  }
 
-    body::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.45);
-      z-index: 0;
-    }
+  @keyframes gradientBG {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+  }
 
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+  .container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 400px;
+  }
 
-    .container {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: 400px;
-    }
+  .logo { width:120px; height:120px; border-radius:50%; border:3px solid #fff; margin-bottom:20px; box-shadow:0 0 20px rgba(255,255,255,0.3); }
 
-    .logo {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid #fff;
-      margin-bottom: 20px;
-      animation: fadeIn 1s ease forwards;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-    }
+  h1 { font-size:2.2em; color:#fff; margin-bottom:5px; text-shadow:2px 2px 15px rgba(0,0,0,0.6); }
 
-    h1 {
-      font-size: 2.2em;
-      color: #fff;
-      margin-bottom: 5px;
-      animation: fadeIn 1.2s ease forwards;
-      text-shadow: 2px 2px 15px rgba(0,0,0,0.6);
-    }
+  p { font-size:1em; color:#ddd; margin-bottom:30px; }
 
-    p {
-      font-size: 1em;
-      color: #ddd;
-      margin-bottom: 30px;
-      animation: fadeIn 1.4s ease forwards;
-    }
+  .links { display:flex; flex-direction:column; gap:15px; width:100%; }
 
-    .links {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      width: 100%;
-      animation: fadeIn 1.6s ease forwards;
-    }
+  .link-button {
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    padding:14px 20px; border-radius:30px; text-decoration:none;
+    font-weight:600; color:#fff; background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(8px); border:1px solid rgba(255,255,255,0.5);
+    transition: all 0.3s ease; box-shadow:0 4px 20px rgba(0,0,0,0.3);
+  }
 
-    .link-button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 14px 20px;
-      border-radius: 30px;
-      text-decoration: none;
-      font-weight: 600;
-      color: #fff;
-      background: rgba(0,0,0,0.4);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    }
+  .youtube:hover { background-color:#FF0000; box-shadow:0 6px 25px rgba(255,0,0,0.5);}
+  .instagram:hover { background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); box-shadow:0 6px 25px rgba(236,64,122,0.5);}
+  .whatsapp:hover { background-color:#25D366; box-shadow:0 6px 25px rgba(37,211,102,0.5);}
+  .flipkart:hover { background-color:#2874F0; box-shadow:0 6px 25px rgba(40,116,240,0.5);}
 
-    .youtube:hover { background-color: #FF0000; box-shadow: 0 6px 25px rgba(255,0,0,0.5); }
-    .instagram:hover { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); box-shadow: 0 6px 25px rgba(236,64,122,0.5); }
-    .whatsapp:hover { background-color: #25D366; box-shadow: 0 6px 25px rgba(37,211,102,0.5); }
-    .flipkart:hover { background-color: #2874F0; box-shadow: 0 6px 25px rgba(40,116,240,0.5); }
-
-    .link-button i {
-      font-size: 1.2em;
-    }
-
-    footer {
-      margin-top: 40px;
-      font-size: 0.8em;
-      color: #ccc;
-      animation: fadeIn 1.8s ease forwards;
-    }
-
-    @keyframes fadeIn {
-      0% {opacity: 0; transform: translateY(20px);}
-      100% {opacity: 1; transform: translateY(0);}
-    }
-  </style>
+  footer { margin-top:40px; font-size:0.8em; color:#ccc; }
+  
+  canvas { position: absolute; top:0; left:0; z-index:1; pointer-events:none; }
+</style>
 </head>
 <body>
 
-  <div class="container">
-    <img src="logo.png" alt="Pratap Trader's Logo" class="logo">
-    <h1>Pratap Trader's</h1>
-    <p>Premium Fashion for Men & Women</p>
+<canvas id="bubbleCanvas"></canvas>
 
-    <div class="links">
-      <a href="https://youtube.com/@pratap.traders?si=sjyhUv3C1pd5VFcc" class="link-button youtube" data-bg="linear-gradient(135deg,#FF0000,#cc0000)" target="_blank">
-        <i class="fab fa-youtube"></i> YouTube
-      </a>
-      <a href="https://instagram.com/pratap.traders" class="link-button instagram" data-bg="linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)" target="_blank">
-        <i class="fab fa-instagram"></i> Instagram
-      </a>
-      <a href="https://wa.me/your-number" class="link-button whatsapp" data-bg="linear-gradient(135deg,#25D366,#128C7E)" target="_blank">
-        <i class="fab fa-whatsapp"></i> WhatsApp
-      </a>
-      <a href="https://flipkart.com/store-link" class="link-button flipkart" data-bg="linear-gradient(135deg,#2874F0,#ffcc00)" target="_blank">
-        <i class="fas fa-store"></i> Flipkart Store
-      </a>
-    </div>
+<div class="container">
+  <img src="logo.png" alt="Pratap Trader's Logo" class="logo">
+  <h1>Pratap Trader's</h1>
+  <p>Premium Fashion for Men & Women</p>
 
-    <footer>
-      &copy; 2025 Pratap Trader's. All rights reserved.
-    </footer>
+  <div class="links">
+    <a href="https://youtube.com/@pratap.traders?si=sjyhUv3C1pd5VFcc" class="link-button youtube" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+    <a href="https://instagram.com/pratap.traders" class="link-button instagram" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+    <a href="https://wa.me/your-number" class="link-button whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+    <a href="https://flipkart.com/store-link" class="link-button flipkart" target="_blank"><i class="fas fa-store"></i> Flipkart Store</a>
   </div>
 
-  <script>
-    const buttons = document.querySelectorAll('.link-button');
-    const body = document.body;
-    const originalGradient = 'linear-gradient(270deg, #ff6b6b, #ffa500, #ffd700, #33cc99, #3399ff, #9933ff, #ff33aa)';
-    
-    buttons.forEach(button => {
-      button.addEventListener('mouseenter', () => {
-        body.style.background = button.getAttribute('data-bg');
-        body.style.backgroundSize = 'cover';
-        body.style.transition = 'background 0.8s ease';
-        body.style.animation = 'none'; // stop animated gradient temporarily
-      });
-      button.addEventListener('mouseleave', () => {
-        body.style.background = originalGradient;
-        body.style.backgroundSize = '1400% 1400%';
-        body.style.animation = 'gradientBG 25s ease infinite'; // resume animation
-      });
-    });
-  </script>
+  <footer>&copy; 2025 Pratap Trader's. All rights reserved.</footer>
+</div>
+
+<script>
+const canvas = document.getElementById('bubbleCanvas');
+const ctx = canvas.getContext('2d');
+let width = canvas.width = window.innerWidth;
+let height = canvas.height = window.innerHeight;
+
+let bubbles = [];
+let resetTimeout;
+
+// Bubble class
+class Bubble {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.radius = Math.random() * 20 + 10;
+    this.alpha = 1;
+    this.speed = Math.random() * 2 + 1;
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(255,255,255,${this.alpha})`;
+    ctx.fill();
+  }
+  update() {
+    this.y -= this.speed;
+    this.alpha -= 0.01;
+    this.radius += 0.1;
+  }
+}
+
+// Animate bubbles
+function animate() {
+  ctx.clearRect(0, 0, width, height);
+  bubbles.forEach((b, i) => {
+    b.update();
+    b.draw();
+    if(b.alpha <= 0) bubbles.splice(i,1);
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+
+// Create bubble on click
+document.body.addEventListener('click', e => {
+  bubbles.push(new Bubble(e.clientX, e.clientY));
+  
+  // Reset background after 3 seconds if no interaction
+  clearTimeout(resetTimeout);
+  resetTimeout = setTimeout(() => {
+    document.body.style.background = 'linear-gradient(270deg, #ff6b6b, #ffa500, #ffd700, #33cc99, #3399ff, #9933ff, #ff33aa)';
+  }, 3000);
+});
+
+// Make canvas responsive
+window.addEventListener('resize', () => {
+  width = canvas.width = window.innerWidth;
+  height = canvas.height = window.innerHeight;
+});
+</script>
 
 </body>
 </html>
+
