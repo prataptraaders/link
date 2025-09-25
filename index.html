@@ -1,129 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pratap Trader's</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pratap Trader's</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
 
-  body {
-    min-height: 100vh;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    text-align: center; color: #fff;
-    overflow: hidden; position: relative;
-    background: linear-gradient(270deg, #ff6b6b, #ffa500, #ffd700, #33cc99, #3399ff, #9933ff, #ff33aa);
-    background-size: 1400% 1400%;
-    animation: gradientBG 25s ease infinite;
-  }
+    body {
+      min-height:100vh;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      text-align:center; color:#fff;
+      overflow:hidden; position:relative;
+    }
 
-  @keyframes gradientBG {
-    0% {background-position: 0% 50%;}
-    50% {background-position: 100% 50%;}
-    100% {background-position: 0% 50%;}
-  }
+    /* Background container for water effect */
+    #water-bg {
+      position:fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      background: linear-gradient(270deg, #ff6b6b, #ffa500, #ffd700, #33cc99, #3399ff, #9933ff, #ff33aa);
+      background-size:1400% 1400%;
+      animation: gradientBG 25s ease infinite;
+      z-index:-2;
+    }
 
-  body::before {
-    content:"";
-    position:absolute; top:0; left:0;
-    width:100%; height:100%;
-    background: rgba(0,0,0,0.45);
-    z-index:0;
-  }
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
 
-  canvas {
-    position:absolute; top:0; left:0;
-    width:100%; height:100%;
-    z-index:1; pointer-events:none;
-  }
+    #water-overlay {
+      position:fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      z-index:-1;
+    }
 
-  .container { position:relative; z-index:2; max-width:400px; }
-  .logo { width:120px; height:120px; border-radius:50%; border:3px solid #fff; margin-bottom:20px; }
-  h1 { font-size:2.2em; margin-bottom:5px; }
-  p { font-size:1em; margin-bottom:30px; color:#ddd; }
-  .links { display:flex; flex-direction:column; gap:15px; }
-  .link-button {
-    display:flex; align-items:center; justify-content:center; gap:10px;
-    padding:14px 20px; border-radius:30px; text-decoration:none;
-    font-weight:600; color:#fff;
-    background: rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.5);
-    backdrop-filter: blur(8px); transition:all 0.3s ease;
-  }
-  .youtube:hover { background:#FF0000; }
-  .instagram:hover { background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);}
-  .whatsapp:hover { background:#25D366; }
-  .flipkart:hover { background:#2874F0; }
-  footer { margin-top:40px; font-size:0.8em; color:#ccc; }
-</style>
+    body::before {
+      content:"";
+      position:absolute; top:0; left:0;
+      width:100%; height:100%;
+      background: rgba(0,0,0,0.45);
+      z-index:-1;
+    }
+
+    .container { position:relative; z-index:1; max-width:400px; }
+    .logo { width:120px; height:120px; border-radius:50%; border:3px solid #fff; margin-bottom:20px; }
+    h1 { font-size:2.2em; margin-bottom:5px; }
+    p { font-size:1em; margin-bottom:30px; color:#ddd; }
+    .links { display:flex; flex-direction:column; gap:15px; }
+    .link-button {
+      display:flex; align-items:center; justify-content:center; gap:10px;
+      padding:14px 20px; border-radius:30px; text-decoration:none;
+      font-weight:600; color:#fff;
+      background: rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.5);
+      backdrop-filter: blur(8px); transition:all 0.3s ease;
+    }
+    .youtube:hover { background:#FF0000; }
+    .instagram:hover { background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);}
+    .whatsapp:hover { background:#25D366; }
+    .flipkart:hover { background:#2874F0; }
+    footer { margin-top:40px; font-size:0.8em; color:#ccc; }
+  </style>
 </head>
 <body>
 
-<canvas id="rippleCanvas"></canvas>
+  <div id="water-bg"></div>
+  <canvas id="water-overlay"></canvas>
 
-<div class="container">
-  <img src="logo.png" alt="Pratap Trader's Logo" class="logo">
-  <h1>Pratap Trader's</h1>
-  <p>Premium Fashion for Men & Women</p>
+  <div class="container">
+    <img src="logo.png" alt="Pratap Trader's Logo" class="logo">
+    <h1>Pratap Trader's</h1>
+    <p>Premium Fashion for Men & Women</p>
 
-  <div class="links">
-    <a href="https://youtube.com/@pratap.traders?si=sjyhUv3C1pd5VFcc" class="link-button youtube" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
-    <a href="https://instagram.com/pratap.traders" class="link-button instagram" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-    <a href="https://wa.me/your-number" class="link-button whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-    <a href="https://flipkart.com/store-link" class="link-button flipkart" target="_blank"><i class="fas fa-store"></i> Flipkart Store</a>
+    <div class="links">
+      <a href="https://youtube.com/@pratap.traders?si=sjyhUv3C1pd5VFcc" class="link-button youtube" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+      <a href="https://instagram.com/pratap.traders" class="link-button instagram" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+      <a href="https://wa.me/your-number" class="link-button whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+      <a href="https://flipkart.com/store-link" class="link-button flipkart" target="_blank"><i class="fas fa-store"></i> Flipkart Store</a>
+    </div>
+
+    <footer>&copy; 2025 Pratap Trader's. All rights reserved.</footer>
   </div>
 
-  <footer>&copy; 2025 Pratap Trader's. All rights reserved.</footer>
-</div>
+  <!-- Ripple JS (WebGL water effect) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ripplejs/1.0.0/ripple.min.js"></script>
+  <script>
+    const canvas = document.getElementById('water-overlay');
+    const ripple = new Ripple(canvas, {
+      resolution: 256,
+      dropRadius: 20,
+      perturbance: 0.04,
+    });
 
-<script>
-const canvas = document.getElementById("rippleCanvas");
-const ctx = canvas.getContext("2d");
-let width, height;
-let ripples = [];
+    // Trigger ripple on click/tap
+    document.addEventListener('click', e => {
+      ripple.drop(e.clientX, e.clientY, 20, 0.04);
+    });
 
-function resizeCanvas() {
-  width = canvas.width = window.innerWidth;
-  height = canvas.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener("resize", resizeCanvas);
-
-class Ripple {
-  constructor(x, y) {
-    this.x = x; this.y = y;
-    this.radius = 0; this.opacity = 0.5;
-  }
-  draw() {
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2);
-    ctx.strokeStyle = `rgba(255,255,255,${this.opacity})`;
-    ctx.lineWidth = 2;
-    ctx.stroke();
-  }
-  update() {
-    this.radius += 4;
-    this.opacity -= 0.007;
-  }
-}
-
-function animate() {
-  ctx.clearRect(0,0,width,height);
-  ripples.forEach((r,i) => {
-    r.update();
-    r.draw();
-    if(r.opacity <= 0) ripples.splice(i,1);
-  });
-  requestAnimationFrame(animate);
-}
-animate();
-
-document.body.addEventListener("click", e => {
-  ripples.push(new Ripple(e.clientX, e.clientY));
-});
-</script>
+    // Auto reset if idle for 3s
+    let idleTimer;
+    function resetIdle() {
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => {
+        ripple.clear(); // smooth return
+      }, 3000);
+    }
+    document.addEventListener('click', resetIdle);
+    resetIdle();
+  </script>
 
 </body>
 </html>
