@@ -109,7 +109,7 @@
       box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     }
 
-    /* Button hover colors remain */
+    /* Button hover glow */
     .youtube:hover { background-color: #FF0000; box-shadow: 0 6px 25px rgba(255,0,0,0.5); }
     .instagram:hover { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); box-shadow: 0 6px 25px rgba(236,64,122,0.5); }
     .whatsapp:hover { background-color: #25D366; box-shadow: 0 6px 25px rgba(37,211,102,0.5); }
@@ -136,16 +136,31 @@
     <p>Premium Fashion for Men & Women</p>
 
     <div class="links">
-      <a href="https://youtube.com/@pratap.traders?si=sjyhUv3C1pd5VFcc" class="link-button youtube" data-bg="linear-gradient(135deg,#FF0000,#cc0000)" target="_blank">
+      <a href="https://youtube.com/@pratap.traders?si=sjyhUv3C1pd5VFcc" 
+         class="link-button youtube" 
+         data-preview="url('https://i.imgur.com/CzXTtJV.jpg')" 
+         target="_blank">
         <i class="fab fa-youtube"></i> YouTube
       </a>
-      <a href="https://instagram.com/pratap.traders" class="link-button instagram" data-bg="linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)" target="_blank">
+
+      <a href="https://instagram.com/pratap.traders" 
+         class="link-button instagram" 
+         data-preview="url('https://i.imgur.com/kqJ3zqW.jpg')" 
+         target="_blank">
         <i class="fab fa-instagram"></i> Instagram
       </a>
-      <a href="https://wa.me/your-number" class="link-button whatsapp" data-bg="linear-gradient(135deg,#25D366,#128C7E)" target="_blank">
+
+      <a href="https://wa.me/your-number" 
+         class="link-button whatsapp" 
+         data-preview="url('https://i.imgur.com/Nv6dZ0x.jpg')" 
+         target="_blank">
         <i class="fab fa-whatsapp"></i> WhatsApp
       </a>
-      <a href="https://flipkart.com/store-link" class="link-button flipkart" data-bg="linear-gradient(135deg,#2874F0,#ffcc00)" target="_blank">
+
+      <a href="https://flipkart.com/store-link" 
+         class="link-button flipkart" 
+         data-preview="url('https://i.imgur.com/1H2TKx9.jpg')" 
+         target="_blank">
         <i class="fas fa-store"></i> Flipkart Store
       </a>
     </div>
@@ -158,21 +173,26 @@
   <script>
     const buttons = document.querySelectorAll('.link-button');
     const body = document.body;
+    const originalBG = getComputedStyle(body).backgroundImage;
 
     buttons.forEach(button => {
-      const originalBG = getComputedStyle(body).backgroundImage;
-
       button.addEventListener('mouseenter', () => {
-        body.style.background = button.getAttribute('data-bg');
-        body.style.transition = 'background 0.8s ease';
+        const preview = button.getAttribute('data-preview');
+        if (preview) {
+          body.style.backgroundImage = preview;
+          body.style.backgroundSize = 'cover';
+          body.style.backgroundPosition = 'center';
+          body.style.animation = 'none'; // pause gradient
+        }
       });
 
       button.addEventListener('mouseleave', () => {
-        body.style.background = originalBG;
+        body.style.backgroundImage = originalBG;
+        body.style.backgroundSize = '1400% 1400%';
+        body.style.animation = 'gradientBG 25s ease infinite'; // resume gradient
       });
     });
   </script>
 
 </body>
 </html>
-
