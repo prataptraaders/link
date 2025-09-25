@@ -51,8 +51,8 @@
   p { font-size:1em; color:#ddd; margin-bottom:30px; animation:fadeIn 1.4s ease forwards; }
   .links { display:flex; flex-direction:column; gap:20px; width:100%; animation:fadeIn 1.6s ease forwards; }
 
-  /* Apple-style swipe */
-  .swipe-btn {
+  /* Tap buttons */
+  .tap-btn {
     position: relative;
     border-radius: 50px;
     overflow: hidden;
@@ -66,9 +66,9 @@
     box-shadow: 0 8px 20px rgba(0,0,0,0.4);
     transition: box-shadow 0.3s ease, transform 0.3s ease;
   }
-  .swipe-btn:hover { box-shadow:0 10px 30px rgba(0,0,0,0.5); transform:scale(1.02); }
+  .tap-btn:hover { box-shadow:0 10px 30px rgba(0,0,0,0.5); transform:scale(1.02); }
 
-  .swipe-handle {
+  .tap-handle {
     width: 70px; height: 70px;
     border-radius: 50%;
     background:#fff;
@@ -80,7 +80,7 @@
     user-select:none;
   }
 
-  .swipe-text {
+  .tap-text {
     position:absolute; left:20px; right:20px;
     font-weight:600; color:#fff;
     pointer-events:none;
@@ -88,7 +88,7 @@
     text-align:center;
   }
 
-  .swipe-arrow {
+  .tap-arrow {
     margin-left: 10px;
     font-size:1.5em;
     color:#fff;
@@ -111,21 +111,21 @@
 
   <div class="links">
     <!-- YouTube -->
-    <div class="swipe-btn" data-bg="linear-gradient(135deg,#FF0000,#cc0000)" data-link="https://youtube.com/@pratap.traders?si=sjyhUv3C1pd5VFcc">
-      <div class="swipe-handle"><img src="https://img.icons8.com/color/48/000000/youtube-play.png" width="30"/></div>
-      <div class="swipe-text">Swipe to YouTube <span class="swipe-arrow">→</span></div>
+    <div class="tap-btn" data-bg="linear-gradient(135deg,#FF0000,#cc0000)" data-link="https://youtube.com/@pratap.traders?si=sjyhUv3C1pd5VFcc">
+      <div class="tap-handle"><img src="https://img.icons8.com/color/48/000000/youtube-play.png" width="30"/></div>
+      <div class="tap-text">Tap to YouTube <span class="tap-arrow">→</span></div>
     </div>
 
     <!-- Instagram -->
-    <div class="swipe-btn" data-bg="linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)" data-link="https://instagram.com/pratap.traders">
-      <div class="swipe-handle"><img src="https://img.icons8.com/color/48/000000/instagram-new.png" width="30"/></div>
-      <div class="swipe-text">Swipe to Instagram <span class="swipe-arrow">→</span></div>
+    <div class="tap-btn" data-bg="linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)" data-link="https://instagram.com/pratap.traders">
+      <div class="tap-handle"><img src="https://img.icons8.com/color/48/000000/instagram-new.png" width="30"/></div>
+      <div class="tap-text">Tap to Instagram <span class="tap-arrow">→</span></div>
     </div>
 
     <!-- WhatsApp -->
-    <div class="swipe-btn" data-bg="linear-gradient(135deg,#25D366,#128C7E)" data-link="https://wa.me/your-number">
-      <div class="swipe-handle"><img src="https://img.icons8.com/color/48/000000/whatsapp.png" width="30"/></div>
-      <div class="swipe-text">Swipe to WhatsApp <span class="swipe-arrow">→</span></div>
+    <div class="tap-btn" data-bg="linear-gradient(135deg,#25D366,#128C7E)" data-link="https://wa.me/your-number">
+      <div class="tap-handle"><img src="https://img.icons8.com/color/48/000000/whatsapp.png" width="30"/></div>
+      <div class="tap-text">Tap to WhatsApp <span class="tap-arrow">→</span></div>
     </div>
   </div>
 
@@ -133,7 +133,7 @@
 </div>
 
 <script>
-const buttons = document.querySelectorAll('.swipe-btn');
+const buttons = document.querySelectorAll('.tap-btn');
 const body = document.body;
 const originalGradient = getComputedStyle(body).backgroundImage;
 
@@ -151,29 +151,11 @@ buttons.forEach(btn => {
   });
 });
 
-// Apple-style swipe logic
+// Tap to open links
 buttons.forEach(btn => {
-  const handle = btn.querySelector('.swipe-handle');
-  let isDragging = false, startX = 0, currentX = 0;
-  const maxDrag = btn.offsetWidth - handle.offsetWidth - 5;
-
-  const startDrag = (clientX) => { isDragging=true; startX=clientX-handle.offsetLeft; };
-  const moveDrag = (clientX) => {
-    if(!isDragging) return;
-    currentX = clientX - startX;
-    if(currentX<0) currentX=0;
-    if(currentX>maxDrag) currentX=maxDrag;
-    handle.style.transform=`translateX(${currentX}px)`;
-  };
-  const endDrag = () => { isDragging=false; if(currentX>=maxDrag) window.open(btn.getAttribute('data-link'), '_blank'); handle.style.transform='translateX(0)'; };
-
-  handle.addEventListener('pointerdown', e=>{ startDrag(e.clientX); handle.setPointerCapture(e.pointerId); });
-  handle.addEventListener('pointermove', e=>{ moveDrag(e.clientX); });
-  handle.addEventListener('pointerup', e=>{ endDrag(); });
-
-  handle.addEventListener('touchstart', e=>{ startDrag(e.touches[0].clientX); });
-  handle.addEventListener('touchmove', e=>{ moveDrag(e.touches[0].clientX); });
-  handle.addEventListener('touchend', e=>{ endDrag(); });
+  btn.addEventListener('click', () => {
+    window.open(btn.getAttribute('data-link'), '_blank');
+  });
 });
 
 // Ripple effect
