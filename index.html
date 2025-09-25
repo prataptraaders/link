@@ -17,7 +17,7 @@
       overflow:hidden; position:relative;
     }
 
-    /* Background container for water effect */
+    /* Gradient background */
     #water-bg {
       position:fixed;
       top:0; left:0;
@@ -34,6 +34,7 @@
       100% {background-position: 0% 50%;}
     }
 
+    /* Water ripple overlay */
     #water-overlay {
       position:fixed;
       top:0; left:0;
@@ -88,7 +89,7 @@
     <footer>&copy; 2025 Pratap Trader's. All rights reserved.</footer>
   </div>
 
-  <!-- Ripple JS (WebGL water effect) -->
+  <!-- RippleJS (WebGL water effect) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ripplejs/1.0.0/ripple.min.js"></script>
   <script>
     const canvas = document.getElementById('water-overlay');
@@ -98,20 +99,38 @@
       perturbance: 0.04,
     });
 
-    // Trigger ripple on click/tap
+    // Function to create ripple
+    function makeRipple(x, y) {
+      ripple.drop(x, y, 20, 0.04);
+    }
+
+    // On click/tap
     document.addEventListener('click', e => {
-      ripple.drop(e.clientX, e.clientY, 20, 0.04);
+      makeRipple(e.clientX, e.clientY);
+      resetIdle();
     });
 
-    // Auto reset if idle for 3s
+    // On mouse move (gentle ripples)
+    document.addEventListener('mousemove', e => {
+      makeRipple(e.clientX, e.clientY);
+      resetIdle();
+    });
+
+    // On touch move (mobile water drag)
+    document.addEventListener('touchmove', e => {
+      const touch = e.touches[0];
+      makeRipple(touch.clientX, touch.clientY);
+      resetIdle();
+    });
+
+    // Idle reset after 3s
     let idleTimer;
     function resetIdle() {
       clearTimeout(idleTimer);
       idleTimer = setTimeout(() => {
-        ripple.clear(); // smooth return
+        ripple.clear();
       }, 3000);
     }
-    document.addEventListener('click', resetIdle);
     resetIdle();
   </script>
 
